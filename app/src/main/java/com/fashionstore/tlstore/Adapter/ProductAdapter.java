@@ -55,13 +55,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         Glide.with(context).load(list.get(position).getProductImages().get(0).getImage()).into(holder.ivProduct);
         holder.tvProductName.setText(list.get(position).getProductName());
-        holder.tvProductPrice.setText("$"+list.get(position).getPrice());
+        holder.tvProductPrice.setText("$" + list.get(position).getPrice());
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list != null) {
+            return list.size();
+        }
+        return 0;
     }
-    
+
 
 }
