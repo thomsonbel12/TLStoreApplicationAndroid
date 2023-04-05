@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFEDED"
     tools:context=".Activity.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -178,7 +179,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="70dp"
         android:isScrollContainer="false"
         android:nestedScrollingEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -191,7 +192,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:isScrollContainer="false"
-            android:nestedScrollingEnabled="false" />
+            android:nestedScrollingEnabled="false"
+            app:layout_anchor="@+id/linearLayout4"
+            app:layout_anchorGravity="top|center" />
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -199,7 +202,6 @@
             android:layout_height="match_parent"
             android:layout_marginStart="26dp"
             android:layout_marginEnd="26dp"
-            android:layout_marginBottom="32dp"
             android:gravity="center"
             android:isScrollContainer="false"
             android:nestedScrollingEnabled="false"
