@@ -172,14 +172,14 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
         ProductAPI.PRODUCT_API.getProductByCategoryId(id).enqueue(new Callback<List<ProductModel>>() {
             @Override
             public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
-                if (response.isSuccessful()) {
+//                if (response.isSuccessful()) {
                     productList = response.body();
                     productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
-                    tvUserAction.setText(tvUserAction.getText().toString() + " - "+ productList.size() + " results");
+                    tvUserAction.setText(tvUserAction.getText().toString() + " - "+ (productList!=null?productList.size():0) + " results");
                     rvShowProduct.setAdapter(productAdapter);
-                } else {
-                    Log.e("=====Product", "Empty");
-                }
+//                } else {
+//                    Log.e("=====Product", "Empty");
+//                }
             }
 
             @Override
@@ -219,12 +219,12 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
         ProductAPI.PRODUCT_API.getProductByName(name).enqueue(new Callback<List<ProductModel>>() {
             @Override
             public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
-                if(response.isSuccessful()){
+//                if(response.isSuccessful()){
                     productList = response.body();
                     productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
-                    tvUserAction.setText(tvUserAction.getText() + " - " + productList.size() + " results");
+                    tvUserAction.setText(tvUserAction.getText() + " - " + (productList!=null?productList.size():0) + " results");
                     rvShowProduct.setAdapter(productAdapter);
-                }
+//                }
             }
 
             @Override
