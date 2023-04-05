@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fashionstore.tlstore.Interface.CategoryRecycleInterface;
 import com.fashionstore.tlstore.Model.CategoryModel;
 import com.fashionstore.tlstore.R;
 

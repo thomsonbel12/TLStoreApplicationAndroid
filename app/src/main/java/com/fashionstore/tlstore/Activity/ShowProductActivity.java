@@ -29,7 +29,7 @@ import com.fashionstore.tlstore.Model.UserModel;
 import com.fashionstore.tlstore.R;
 import com.fashionstore.tlstore.SharedPrefManager;
 import com.fashionstore.tlstore.Adapter.CategoryAdapter;
-import com.fashionstore.tlstore.Adapter.CategoryRecycleInterface;
+import com.fashionstore.tlstore.Interface.CategoryRecycleInterface;
 import com.fashionstore.tlstore.Adapter.ProductAdapter;
 
 import java.util.List;

@@ -15,13 +15,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.fashionstore.tlstore.API.CategoryAPI;
 import com.fashionstore.tlstore.API.ProductAPI;
-import com.fashionstore.tlstore.Adapter.CategoryRecycleInterface;
+import com.fashionstore.tlstore.Interface.CategoryRecycleInterface;
 import com.fashionstore.tlstore.Model.CategoryModel;
 import com.fashionstore.tlstore.Model.ProductModel;
 import com.fashionstore.tlstore.Model.UserModel;
@@ -30,7 +29,6 @@ import com.fashionstore.tlstore.SharedPrefManager;
 import com.fashionstore.tlstore.Adapter.CategoryAdapter;
 import com.fashionstore.tlstore.Adapter.ProductAdapter;
 
-import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
