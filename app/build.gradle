@@ -53,6 +53,10 @@ dependencies {
     //thư viện circle images
     //bo goc tron cho ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
+    implementation 'me.relex:circleindicator:2.1.6'
+
 }
 //dependencies{
 //    compileOnly 'org.projectlombok:lombok:1.18.12'
