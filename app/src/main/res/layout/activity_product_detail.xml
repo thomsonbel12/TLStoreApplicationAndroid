@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
         android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         android:background="@drawable/white_background_product_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +27,12 @@
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vpProductImage"
-                android:layout_width="match_parent"
-                android:layout_height="340dp"
+                android:layout_width="wrap_content"
+                android:layout_height="390dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="8dp"
+                android:labelFor="@+id/ciProductImage" />
 
             <me.relex.circleindicator.CircleIndicator
                 android:id="@+id/ciProductImage"
@@ -39,9 +40,31 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                app:ci_drawable="@drawable/circle_indicator_background"/>
+                app:ci_drawable="@drawable/circle_indicator_background" />
 
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clbackBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gray_circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView14"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icons8_white_back" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:fontFamily="serif"
+            android:fontFamily="sans-serif"
             android:text="10000"
             android:textColor="#0040ac"
             android:textSize="22sp"
@@ -101,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:fontFamily="serif"
+            android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="20312"
             android:textColor="#0040ac"
@@ -199,7 +222,8 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView15"
-                    app:layout_constraintTop_toBottomOf="@+id/textView22" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView22"
+                    app:layout_constraintVertical_bias="0.086" />
 
                 <TextView
                     android:id="@+id/tvProductPriceDetail"
@@ -211,10 +235,47 @@
                     android:textSize="26sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/textView23"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/textView23"
                     app:layout_constraintTop_toTopOf="@+id/textView23"
-                    app:layout_constraintVertical_bias="0.5" />
+                    app:layout_constraintVertical_bias="0.375" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/raleway"
+                    android:text="Description:"
+                    android:textColor="#0060ac"
+                    android:textSize="18sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/raleway"
+                    android:text="Discover our selection of stylish and comfortable skirts that are perfect for any occasion! From classic pencil skirts to flowy maxi skirts, we have something for every taste and body type. Learn more about our product info and find the ideal skirt for you."
+                    android:textColor="#0060AB"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </ScrollView>
 
@@ -242,51 +303,29 @@
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="26dp"
-            android:layout_marginEnd="26dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:gravity="center"
             android:isScrollContainer="false"
             android:nestedScrollingEnabled="false"
             android:orientation="horizontal"
-            android:weightSum="5">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/appBarHomeBtn"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="2"
-                android:background="@drawable/selected_bar_item"
-                android:drawableStart="@drawable/icons8_home"
-                android:fontFamily="@font/raleway"
-                android:paddingStart="24dp"
-                android:paddingTop="3dp"
-                android:paddingEnd="18dp"
-                android:paddingBottom="3dp"
-                android:text="Home"
-                android:textAllCaps="false"
-                android:textColor="#0044ac"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            android:weightSum="4">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="3"
-                android:background="@drawable/unselect_bar_background"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="3dp"
-                android:paddingTop="3dp"
                 android:paddingEnd="3dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="3dp">
+                android:paddingRight="3dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clCartAppBar"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/unselect_bar_item">
+                    android:id="@+id/clDecreaseProductAppBar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/black_circle_gray_inner">
 
                     <ImageView
                         android:id="@+id/imageView10"
@@ -296,20 +335,25 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/icons8_shopping_cart_bar_item" />
+                        app:srcCompat="@drawable/icons8_subtract" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clOrderAppBar"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/unselect_bar_item">
+                    android:id="@+id/clProductNumberAppBar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/black_circle">
 
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="30dp"
+                    <TextView
+                        android:id="@+id/tvProductNumberAppBar"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
+                        android:fontFamily="@font/raleway"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="#fff"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -318,11 +362,10 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clProfileAppBar"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/unselect_bar_item">
+                    android:id="@+id/clIncreaseProductAppBar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/black_circle_gray_inner">
 
                     <ImageView
                         android:id="@+id/imageView12"
@@ -332,9 +375,26 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/icons8_user_bar_item" />
+                        app:srcCompat="@drawable/icons8_plus" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/addToCartBtn"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:background="@drawable/selected_bar_item"
+                android:drawableStart="@drawable/icons8_blue_shopping_cart"
+                android:drawableEnd="@drawable/icons8_blue_double_right_100"
+                android:fontFamily="@font/raleway"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Add to Cart"
+                android:textAllCaps="false"
+                android:textColor="#0044ac"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
