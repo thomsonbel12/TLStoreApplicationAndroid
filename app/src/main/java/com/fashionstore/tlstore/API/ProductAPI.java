@@ -23,6 +23,8 @@ public interface  ProductAPI {
     Call<List<ProductModel>> getTop10BestSelling();
     @GET("Product/new")
     Call<List<ProductModel>> getTop10Newest();
+    @GET("Product/{id}")
+    Call<ProductModel> getProductById(@Path("id")long id);
     @GET("Product/category/{id}")
     Call<List<ProductModel>> getProductByCategoryId(@Path("id")long id);
     @GET("Product/search/name?")

@@ -1,7 +1,6 @@
 package com.fashionstore.tlstore.Model;
 
 
-import java.util.Collection;
 import java.util.List;
 
 public class ProductModel {
@@ -11,17 +10,9 @@ public class ProductModel {
     private int sold;
     private String description;
     private int price;
-    private Boolean isActive = Boolean.TRUE;
+    private Boolean isActive = true;
     private CategoryModel category;
-
     private List<ProductImageModel> productImages;
-
-
-    public ProductModel(long id, String productName, int price) {
-        this.id = id;
-        this.productName = productName;
-        this.price = price;
-    }
 
     public long getId() {
         return id;
