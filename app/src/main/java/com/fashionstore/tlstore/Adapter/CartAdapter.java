@@ -1,6 +1,7 @@
 package com.fashionstore.tlstore.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,19 +30,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivProductImg;
-        TextView tvProductName;
-        TextView tvCartQuantity;
-        TextView tvCartPrice;
+        TextView tvProductName, tvCartProductPrice, tvCartQuantity, tvCartPrice;
         ConstraintLayout clDecrease, clIncrease;
+
+        int cartNumber = 1;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProductImg = itemView.findViewById(R.id.ivProductImgCart);
+
             tvProductName = itemView.findViewById(R.id.tvProductNameCart);
             tvCartPrice = itemView.findViewById(R.id.tvCartPrice);
             tvCartQuantity = itemView.findViewById(R.id.tvProductCartQuantity);
+            tvCartProductPrice = itemView.findViewById(R.id.tvCartProductPrice);
+
             clDecrease = itemView.findViewById(R.id.clDecreaseCartQuantity);
             clIncrease = itemView.findViewById(R.id.clIncreaseCartQuantity);
-
         }
     }
 
@@ -57,11 +60,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
         Glide.with(context).load(cartList.get(position).getProduct().getProductImages().get(0).getImage()).into(holder.ivProductImg);
         holder.tvProductName.setText(cartList.get(position).getProduct().getProductName());
+        holder.cartNumber = cartList.get(position).getQuantity();
+        holder.tvCartProductPrice.setText(cartList.get(position).getProduct().getPrice()+"");
         holder.tvCartQuantity.setText(cartList.get(position).getQuantity()+"");
-        holder.tvCartPrice.setText(String.valueOf(cartList.get(position).getQuantity()*cartList.get(position).getProduct().getPrice())+"");
-
+        holder.tvCartPrice.setText((cartList.get(position).getQuantity() * cartList.get(position).getProduct().getPrice())+"");
     }
-
     @Override
     public int getItemCount() {
         if(cartList != null){

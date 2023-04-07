@@ -2,6 +2,7 @@ package com.fashionstore.tlstore.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +47,8 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
     CategoryAdapter categoryAdapter;
     ProductAdapter productAdapter;
     TextView tvUserAction, tvShowAllProduct;
+    ConstraintLayout clCart;
+
     EditText searchProductEdit;
 
     AppCompatButton appBarHomeBtn;
@@ -73,6 +76,7 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
         showProduct();
 
         backToHome();
+        goToCart();
 
         searchProduct();
     }
@@ -85,6 +89,7 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
         tvUserAction = (TextView) findViewById(R.id.tvUserAction);
         tvShowAllProduct = (TextView) findViewById(R.id.tvShowAllProduct);
         searchProductEdit = (EditText) findViewById(R.id.searchProductEdit);
+        clCart = (ConstraintLayout) findViewById(R.id.clCartAppBar);
 
 
         LinearLayoutManager layout = new GridLayoutManager(this, 2);
@@ -230,6 +235,14 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
             @Override
             public void onFailure(Call<List<ProductModel>> call, Throwable t) {
 
+            }
+        });
+    }
+    public void goToCart(){
+        clCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ShowProductActivity.this, CartActivity.class));
             }
         });
     }
