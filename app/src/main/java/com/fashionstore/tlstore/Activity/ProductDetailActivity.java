@@ -195,7 +195,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         if(productNum <= 0){
             addToCartBtn.setBackgroundDrawable(getDrawable(R.drawable.black_circle_gray_inner));
             addToCartBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icons8_white_shopping_cart, 0, R.drawable.icons8_white_double_right_100, 0);
-            addToCartBtn.setTextColor(Color.parseColor("#d5d5d5"));
             addToCartBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -204,8 +203,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             });
         }else{
             addToCartBtn.setBackgroundDrawable(getDrawable(R.drawable.selected_bar_item));
-            addToCartBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icons8_blue_shopping_cart, 0, R.drawable.icons8_blue_double_right_100, 0);
-            addToCartBtn.setTextColor(Color.parseColor("#0044ac"));
+            addToCartBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icons8_white_shopping_cart, 0, R.drawable.icons8_white_double_right_100, 0);
             addToCartBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

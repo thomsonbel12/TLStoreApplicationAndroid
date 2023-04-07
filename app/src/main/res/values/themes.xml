@@ -14,5 +14,6 @@
         <!-- Customize your theme here. -->
 
         <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 </resources>
