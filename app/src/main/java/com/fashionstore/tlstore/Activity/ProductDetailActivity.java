@@ -223,6 +223,10 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     CartModel cartModel = response.body();
                     Log.e("Cart ID - ", String.valueOf(cartModel.getId()));
+                    Toast.makeText(ProductDetailActivity.this, "Add " +
+                            cartModel.getQuantity() + " of \"" +
+                            cartModel.getProduct().getProductName() +
+                            "\" successful", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -241,6 +245,4 @@ public class ProductDetailActivity extends AppCompatActivity {
             mTimer = null;
         }
     }
-
-
 }

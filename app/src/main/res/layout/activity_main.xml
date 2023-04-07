@@ -205,8 +205,7 @@
             android:gravity="center"
             android:isScrollContainer="false"
             android:nestedScrollingEnabled="false"
-            android:orientation="horizontal"
-            android:weightSum="5">
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/appBarHomeBtn"
@@ -227,9 +226,8 @@
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:layout_weight="3"
                 android:background="@drawable/unselect_bar_background"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -241,9 +239,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clCartAppBar"
-                    android:layout_width="0dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:background="@drawable/unselect_bar_item">
 
                     <ImageView
@@ -259,9 +256,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clOrderAppBar"
-                    android:layout_width="0dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:background="@drawable/unselect_bar_item">
 
                     <ImageView
@@ -277,9 +273,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clProfileAppBar"
-                    android:layout_width="0dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:background="@drawable/unselect_bar_item">
 
                     <ImageView

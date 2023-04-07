@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
     //    public final String BASE_URL = "http://172.20.10.3:8080";
 //    public final String BASE_URL = "http://192.168.1.101:8080";
-    public final String BASE_URL = "http://192.168.1.100:8080";
+    public final String BASE_URL = "http://192.168.1.102:8080";
 //    public final String BASE_URL = "http://172.20.10.3:8080";
 
     Gson gson = new GsonBuilder().setDateFormat("yyyy MM d HH:mm:ss").create();

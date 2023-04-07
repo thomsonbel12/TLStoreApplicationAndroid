@@ -2,6 +2,7 @@ package com.fashionstore.tlstore.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
     ImageView userAvatar;
     EditText searchProductEdit;
 
+    ConstraintLayout clCart;
+
     CategoryAdapter categoryAdapter;
     ProductAdapter productAdapter;
     AppCompatButton appBarHomeBtn;
@@ -62,19 +65,26 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
             }
         }
         anhXa();
+
         loadCategory();
         loadPopularProduct();
         loadLatestProduct();
+
         searchProduct();
+
         backToHome();
+        goToCart();
     }
 
     public void anhXa() {
         userAvatar = (ImageView) findViewById(R.id.userAvatar);
+
         rvCategory = (RecyclerView) findViewById(R.id.rvCategory);
         rvPopularProduct = (RecyclerView) findViewById(R.id.rvPopularProduct);
         rvLatestProduct = (RecyclerView) findViewById(R.id.rvLatestProduct);
+
         appBarHomeBtn = (AppCompatButton) findViewById(R.id.appBarHomeBtn);
+        clCart = (ConstraintLayout) findViewById(R.id.clCartAppBar);
         searchProductEdit = (EditText) findViewById(R.id.searchProductEdit);
     }
 
@@ -190,6 +200,15 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
                     return true;
                 }
                 return false;
+            }
+        });
+    }
+
+    public void goToCart(){
+        clCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
             }
         });
     }
