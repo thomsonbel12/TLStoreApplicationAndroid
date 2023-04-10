@@ -54,10 +54,13 @@ dependencies {
     //bo goc tron cho ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    implementation 'com.github.chthai64:SwipeRevealLayout:1.4.0'
+
 
     implementation 'me.relex:circleindicator:2.1.6'
 
 }
+
 //dependencies{
 //    compileOnly 'org.projectlombok:lombok:1.18.12'
 //    annotationProcessor 'org.projectlombok:lombok:1.18.12' //or v. 1.16.2 in your case.

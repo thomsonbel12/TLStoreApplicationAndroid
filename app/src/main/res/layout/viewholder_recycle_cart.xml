@@ -8,31 +8,38 @@
     android:layout_marginTop="24dp"
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="24dp"
-    android:elevation="3dp">
+    android:background="@drawable/product_background"
+    android:elevation="6dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="155dp"
-        android:background="@drawable/product_background"
-        android:paddingStart="2dp"
-        android:paddingBottom="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ivProductImgCart"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="#FFFFFF"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout11"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/edittext_white_blackborder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivProductImgCart"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tvProductNameCart"
@@ -43,24 +50,24 @@
             android:textColor="#333"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/ivProductImgCart"
-            app:layout_constraintTop_toTopOf="@+id/ivProductImgCart" />
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout11"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout11" />
 
         <LinearLayout
             android:id="@+id/linearLayoutCart1"
-            android:layout_width="173dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="170dp"
+            android:layout_height="45dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/ivProductImgCart"
-            app:layout_constraintStart_toEndOf="@+id/ivProductImgCart">
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout11"
+            app:layout_constraintStart_toStartOf="@+id/tvProductNameCart">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clDecreaseCartQuantity"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@drawable/black_circle_gray_inner">
+                android:background="@drawable/white_round_left_corner">
 
                 <ImageView
                     android:id="@+id/imageView17"
@@ -70,35 +77,23 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/icons8_subtract" />
+                    app:srcCompat="@drawable/icons8_colored_subtract" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="10">
-
-                <TextView
-                    android:id="@+id/tvProductCartQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="#2f6567"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/listDivider"
+                android:backgroundTint="#ECEBE2" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clIncreaseCartQuantity"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@drawable/black_circle_gray_inner_thin">
+                android:background="@drawable/white_round_right_corner">
 
                 <ImageView
                     android:id="@+id/imageView18"
@@ -108,20 +103,42 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/icons8_plus" />
+                    app:srcCompat="@drawable/icons8_colored_plus" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="5">
+
+                <TextView
+                    android:id="@+id/tvProductCartQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="#2f6567"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
             android:fontFamily="sans-serif-black"
             android:text="Total"
             android:textColor="#564C68"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/linearLayoutCart1"
+            app:layout_constraintStart_toStartOf="@+id/textView14"
             app:layout_constraintTop_toTopOf="@+id/linearLayoutCart1" />
 
         <TextView
@@ -164,7 +181,7 @@
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
+            android:layout_marginStart="14dp"
             android:fontFamily="sans-serif-black"
             android:text="Price"
             android:textColor="#564C68"
