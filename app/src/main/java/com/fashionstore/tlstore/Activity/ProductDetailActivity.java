@@ -201,6 +201,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     Toast.makeText(ProductDetailActivity.this, "The number of Product is not Available !", Toast.LENGTH_SHORT).show();
                 }
             });
+            clDecrease.setBackground(getDrawable(R.drawable.black_circle_gray_inner));
         }else{
             addToCartBtn.setBackgroundDrawable(getDrawable(R.drawable.selected_bar_item));
             addToCartBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icons8_white_shopping_cart, 0, R.drawable.icons8_white_double_right_100, 0);
@@ -210,6 +211,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     addToCart();
                 }
             });
+            clDecrease.setBackground(getDrawable(R.drawable.selected_bar_item));
         }
     }
 

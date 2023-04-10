@@ -42,7 +42,7 @@ import retrofit2.Response;
 public class ShowProductActivity extends AppCompatActivity implements CategoryRecycleInterface {
     RecyclerView rvCategory, rvShowProduct;
 
-    ImageView userAvatar;
+    ImageView userAvatar, ivNoProduct;
 
     CategoryAdapter categoryAdapter;
     ProductAdapter productAdapter;
@@ -83,11 +83,16 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
 
     public void anhXa() {
         userAvatar = (ImageView) findViewById(R.id.userAvatar);
+        ivNoProduct = (ImageView) findViewById(R.id.ivNoProduct);
+
         rvCategory = (RecyclerView) findViewById(R.id.rvCategory);
         rvShowProduct = (RecyclerView) findViewById(R.id.rvShowProduct);
+
         appBarHomeBtn = (AppCompatButton) findViewById(R.id.appBarHomeBtn);
+
         tvUserAction = (TextView) findViewById(R.id.tvUserAction);
         tvShowAllProduct = (TextView) findViewById(R.id.tvShowAllProduct);
+
         searchProductEdit = (EditText) findViewById(R.id.searchProductEdit);
         clCart = (ConstraintLayout) findViewById(R.id.clCartAppBar);
 
@@ -134,6 +139,9 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
                             productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
                             rvShowProduct.setAdapter(productAdapter);
                             tvUserAction.setText("All products - " + productList.size() + " results");
+
+//                            rvShowProduct.setBac
+                        }else{
 
                         }
                     }
@@ -182,9 +190,11 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
                     productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
                     tvUserAction.setText(tvUserAction.getText().toString() + " - "+ (productList!=null?productList.size():0) + " results");
                     rvShowProduct.setAdapter(productAdapter);
-//                } else {
-//                    Log.e("=====Product", "Empty");
-//                }
+                    ivNoProduct.setBackground(null);
+                if(productList == null) {
+                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
+                    Log.e("=====Product", "Empty");
+                }
             }
 
             @Override
@@ -229,7 +239,12 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
                     productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
                     tvUserAction.setText(tvUserAction.getText() + " - " + (productList!=null?productList.size():0) + " results");
                     rvShowProduct.setAdapter(productAdapter);
-//                }
+
+                    ivNoProduct.setBackground(null);
+                if(productList == null) {
+                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
+                    Log.e("=====Product", "Empty");
+                }
             }
 
             @Override

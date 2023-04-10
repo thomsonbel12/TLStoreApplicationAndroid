@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp">
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="24dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="24dp"
+    android:elevation="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="100dp"
+        android:layout_width="0dp"
+        android:layout_height="155dp"
+        android:background="@drawable/product_background"
         android:paddingStart="2dp"
         android:paddingBottom="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,6 +28,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,8 +40,9 @@
             android:layout_height="45dp"
             android:layout_marginStart="8dp"
             android:text="Product ABCDXYZ Bla Bla ABCDXYZ Bla Bla ABCDXYZ Bla Bla ABCDXYZ Bla Bla"
-            android:textColor="#0060AC"
+            android:textColor="#333"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/ivProductImgCart"
             app:layout_constraintTop_toTopOf="@+id/ivProductImgCart" />
 
@@ -46,7 +51,6 @@
             android:layout_width="173dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-            android:background="@drawable/unselect_bar_background"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/ivProductImgCart"
             app:layout_constraintStart_toEndOf="@+id/ivProductImgCart">
@@ -72,16 +76,16 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_weight="10"
-                android:background="@drawable/black_circle">
+                android:layout_weight="10">
 
                 <TextView
                     android:id="@+id/tvProductCartQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="#d5d5d5"
+                    android:textColor="#2f6567"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -113,11 +117,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:fontFamily="@font/raleway"
+            android:fontFamily="sans-serif-black"
             android:text="Total"
             android:textColor="#564C68"
             android:textSize="16sp"
-            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@+id/linearLayoutCart1"
             app:layout_constraintTop_toTopOf="@+id/linearLayoutCart1" />
 
@@ -127,7 +130,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
             android:text="$"
-            android:textSize="20sp"
+            android:textColor="#eea07b"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayoutCart1"
             app:layout_constraintStart_toStartOf="@+id/textView8"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -136,11 +140,11 @@
             android:id="@+id/tvCartProductPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="serif-monospace"
+            android:fontFamily="sans-serif-black"
             android:text="10000"
-            android:textColor="#0060AC"
-            android:textSize="20sp"
-            android:textStyle="bold|italic"
+            android:textColor="#336a6c"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textView14"
             app:layout_constraintStart_toEndOf="@+id/textView14" />
 
@@ -148,11 +152,11 @@
             android:id="@+id/tvCartPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="serif-monospace"
+            android:fontFamily="sans-serif-black"
             android:text="10000"
-            android:textColor="#0060AC"
-            android:textSize="20sp"
-            android:textStyle="bold|italic"
+            android:textColor="#336a6c"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textView11"
             app:layout_constraintStart_toEndOf="@+id/textView11" />
 
@@ -161,8 +165,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
+            android:fontFamily="sans-serif-black"
             android:text="Price"
             android:textColor="#564C68"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/tvProductNameCart"
             app:layout_constraintTop_toTopOf="@+id/tvProductNameCart" />
 
@@ -172,7 +178,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
             android:text="$"
-            android:textSize="20sp"
+            android:textColor="#eea07b"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvProductNameCart"
             app:layout_constraintStart_toStartOf="@+id/textView13"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
