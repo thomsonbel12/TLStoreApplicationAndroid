@@ -127,22 +127,26 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
         });
     }
 
-    public void showAllProduct(){
+    public void showAllProduct() {
         tvShowAllProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ProductAPI.PRODUCT_API.getAllProduct().enqueue(new Callback<List<ProductModel>>() {
                     @Override
                     public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             productList = response.body();
                             productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
                             rvShowProduct.setAdapter(productAdapter);
                             tvUserAction.setText("All products - " + productList.size() + " results");
 
+                            ivNoProduct.setVisibility(View.GONE);
 //                            rvShowProduct.setBac
-                        }else{
-
+                        }
+                        if (productList == null) {
+                            ivNoProduct.setVisibility(View.VISIBLE);
+//                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
+                            Log.e("=====Product", "Empty");
                         }
                     }
 
@@ -166,14 +170,14 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
     }
 
     public void showProduct() {
-        if(getIntent().getSerializableExtra("categoryId") != null){
+        if (getIntent().getSerializableExtra("categoryId") != null) {
             long categoryId = (long) getIntent().getSerializableExtra("categoryId");
             loadCategoryProduct(categoryId);
             tvUserAction.setText(getIntent().getSerializableExtra("tvUserActionCategoryClick").toString());
             getIntent().removeExtra("tvUserActionCategoryClick");
             getIntent().removeExtra("categoryId");
-        }else{
-            tvUserAction.setText("Search for \""+getIntent().getSerializableExtra("searchProduct") + "\"");
+        } else {
+            tvUserAction.setText("Search for \"" + getIntent().getSerializableExtra("searchProduct") + "\"");
             searchProductEdit.setText((CharSequence) getIntent().getSerializableExtra("searchProduct"));
             String name = String.valueOf(searchProductEdit.getText());
             searchProductByName(name);
@@ -186,13 +190,13 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
             @Override
             public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
 //                if (response.isSuccessful()) {
-                    productList = response.body();
-                    productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
-                    tvUserAction.setText(tvUserAction.getText().toString() + " - "+ (productList!=null?productList.size():0) + " results");
-                    rvShowProduct.setAdapter(productAdapter);
+                productList = response.body();
+                productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
+                tvUserAction.setText(tvUserAction.getText().toString() + " - " + (productList != null ? productList.size() : 0) + " results");
+                rvShowProduct.setAdapter(productAdapter);
 //                    ivNoProduct.setBackground(null);
-                    ivNoProduct.setVisibility(View.GONE);
-                if(productList == null) {
+                ivNoProduct.setVisibility(View.GONE);
+                if (productList == null) {
                     ivNoProduct.setVisibility(View.VISIBLE);
 //                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
                     Log.e("=====Product", "Empty");
@@ -212,7 +216,7 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
         loadCategoryProduct(categoryList.get(position).getId());
     }
 
-    public void searchProduct(){
+    public void searchProduct() {
         searchProductEdit.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -220,9 +224,9 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-                    if(!TextUtils.isEmpty(String.valueOf(searchProductEdit.getText()))){
+                    if (!TextUtils.isEmpty(String.valueOf(searchProductEdit.getText()))) {
                         String name = String.valueOf(searchProductEdit.getText());
-                        tvUserAction.setText("Search for \""+ name + "\"");
+                        tvUserAction.setText("Search for \"" + name + "\"");
                         searchProductByName(name);
                         closeKeyboard();
                     }
@@ -232,19 +236,20 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
             }
         });
     }
-    public void searchProductByName(String name){
+
+    public void searchProductByName(String name) {
         ProductAPI.PRODUCT_API.getProductByName(name).enqueue(new Callback<List<ProductModel>>() {
             @Override
             public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
 //                if(response.isSuccessful()){
-                    productList = response.body();
-                    productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
-                    tvUserAction.setText(tvUserAction.getText() + " - " + (productList!=null?productList.size():0) + " results");
-                    rvShowProduct.setAdapter(productAdapter);
+                productList = response.body();
+                productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
+                tvUserAction.setText(tvUserAction.getText() + " - " + (productList != null ? productList.size() : 0) + " results");
+                rvShowProduct.setAdapter(productAdapter);
 
 //                    ivNoProduct.setBackground(null);
-                    ivNoProduct.setVisibility(View.GONE);
-                if(productList == null) {
+                ivNoProduct.setVisibility(View.GONE);
+                if (productList == null) {
                     ivNoProduct.setVisibility(View.VISIBLE);
 
 //                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
@@ -258,7 +263,8 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
             }
         });
     }
-    public void goToCart(){
+
+    public void goToCart() {
         clCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,6 +272,7 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
             }
         });
     }
+
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
