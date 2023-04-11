@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -39,7 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivProductImg;
         TextView tvProductName, tvCartProductPrice, tvCartQuantity, tvCartPrice;
-        ConstraintLayout clDecrease, clIncrease;
+        ConstraintLayout clDecrease, clIncrease, clDelete;
 
 
         public ViewHolder(@NonNull View itemView, CartRecycleInterface cartRecycleInterface) {
@@ -53,6 +54,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
             clDecrease = itemView.findViewById(R.id.clDecreaseCartQuantity);
             clIncrease = itemView.findViewById(R.id.clIncreaseCartQuantity);
+            clDelete = itemView.findViewById(R.id.clDeleteCart);
 
             clDecrease.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,6 +69,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     increaseCart();
                 }
             });
+
+            clDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteCart();
+                }
+            });
         }
 
         public void decreaseCart() {
@@ -75,7 +84,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 cartNumber--;
 
                 cartList.get(getAdapterPosition()).setQuantity(cartNumber);
-                updateCart(cartList.get(getAdapterPosition()).getId(), cartNumber);
+                updateCartAPI(cartList.get(getAdapterPosition()).getId(), cartNumber);
 
                 cartRecycleInterface.updateCartTotalPrice((-1) * cartList.get(getAdapterPosition()).getProduct().getPrice());
             }
@@ -88,20 +97,32 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 cartNumber++;
 
                 cartList.get(getAdapterPosition()).setQuantity(cartNumber);
-                updateCart(cartList.get(getAdapterPosition()).getId(), cartNumber);
+                updateCartAPI(cartList.get(getAdapterPosition()).getId(), cartNumber);
 
                 cartRecycleInterface.updateCartTotalPrice((1) * cartList.get(getAdapterPosition()).getProduct().getPrice());
             }
 
         }
 
-        public void updateCart(long cartId, int cartNumber) {
+        public void deleteCart(){
+            CartModel c = cartList.get(getAdapterPosition());
+            notifyItemRemoved(getAdapterPosition());
+            cartList.remove(c);
+
+            deleteCartAPI(c.getId());
+
+            cartRecycleInterface.updateCartTotalPrice(
+                            (-1)
+                            * c.getQuantity()
+                            * c.getProduct().getPrice());
+
+        }
+        public void updateCartAPI(long cartId, int cartNumber) {
             CartAPI.CART_API.updateCartQuantity(cartId, cartNumber).enqueue(new Callback<CartModel>() {
                 @Override
                 public void onResponse(Call<CartModel> call, Response<CartModel> response) {
                     tvCartQuantity.setText(cartNumber + "");
                     tvCartPrice.setText((cartNumber * cartList.get(getAdapterPosition()).getProduct().getPrice()) + "");
-
                 }
 
                 @Override
@@ -110,12 +131,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             });
         }
+
+        public void deleteCartAPI(long cartId){
+            CartAPI.CART_API.deleteCart(cartId).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if(response.isSuccessful()){
+                        Toast.makeText(context, response.body(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.e("CAll Delete Cart API", "fail");
+                }
+            });
+        }
     }
 
     @NonNull
     @Override
     public CartAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_recycle_cart, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_recycle_cart_test, parent, false);
 
         return new ViewHolder(view, cartRecycleInterface);
     }

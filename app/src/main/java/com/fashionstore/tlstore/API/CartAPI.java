@@ -7,6 +7,7 @@ import com.fashionstore.tlstore.Retrofit.RetrofitClient;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -34,5 +35,9 @@ public interface CartAPI {
     @FormUrlEncoded
     @PUT("/Cart/update")
     Call<CartModel> updateCartQuantity(@Field("cartId") Long cartId, @Field("quantity") int quantity);
+
+    @DELETE("/Cart")
+    Call<String> deleteCart(@Query("cartId") long cartId);
+
 
 }

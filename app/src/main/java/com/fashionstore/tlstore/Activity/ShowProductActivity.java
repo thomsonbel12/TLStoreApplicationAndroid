@@ -190,9 +190,11 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
                     productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
                     tvUserAction.setText(tvUserAction.getText().toString() + " - "+ (productList!=null?productList.size():0) + " results");
                     rvShowProduct.setAdapter(productAdapter);
-                    ivNoProduct.setBackground(null);
+//                    ivNoProduct.setBackground(null);
+                    ivNoProduct.setVisibility(View.GONE);
                 if(productList == null) {
-                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
+                    ivNoProduct.setVisibility(View.VISIBLE);
+//                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
                     Log.e("=====Product", "Empty");
                 }
             }
@@ -240,9 +242,12 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
                     tvUserAction.setText(tvUserAction.getText() + " - " + (productList!=null?productList.size():0) + " results");
                     rvShowProduct.setAdapter(productAdapter);
 
-                    ivNoProduct.setBackground(null);
+//                    ivNoProduct.setBackground(null);
+                    ivNoProduct.setVisibility(View.GONE);
                 if(productList == null) {
-                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
+                    ivNoProduct.setVisibility(View.VISIBLE);
+
+//                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
                     Log.e("=====Product", "Empty");
                 }
             }

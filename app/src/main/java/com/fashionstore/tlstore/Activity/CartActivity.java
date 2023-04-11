@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fashionstore.tlstore.API.CartAPI;
@@ -27,9 +28,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CartActivity extends AppCompatActivity implements CartRecycleInterface {
-    ConstraintLayout clHome;
+    ConstraintLayout clHome, clCheckout, clCartPriceCheckout;
     RecyclerView rvCart;
     TextView tvTotalCartPrice;
+    ImageView ivCartEmpty;
     List<CartModel> cartList;
     CartAdapter cartAdapter;
     int totalCartPrice = 0;
@@ -51,8 +53,10 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
 
     void anhXa() {
         clHome = (ConstraintLayout) findViewById(R.id.clHomeAppBar);
+        clCheckout = (ConstraintLayout) findViewById(R.id.clCheckout);
+        clCartPriceCheckout = (ConstraintLayout) findViewById(R.id.clCartPriceCheckout);
         rvCart = (RecyclerView) findViewById(R.id.rvCart);
-
+        ivCartEmpty = (ImageView) findViewById(R.id.ivCartEmpty);
         tvTotalCartPrice = (TextView) findViewById(R.id.tvTotalCartPrice);
     }
 
@@ -68,10 +72,21 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
                     cartAdapter = new CartAdapter(cartRecycleInterface, cartList, CartActivity.this);
                     rvCart.setAdapter(cartAdapter);
 
-                    for (CartModel c : cartList) {
-                        totalCartPrice += c.getQuantity() * c.getProduct().getPrice();
+                    if (cartList != null) {
+                        for (CartModel c : cartList) {
+                            totalCartPrice += c.getQuantity() * c.getProduct().getPrice();
+                        }
+                        tvTotalCartPrice.setText(totalCartPrice + "");
+                        clCartPriceCheckout.setVisibility(View.VISIBLE);
+//                        ivCartEmpty.setBackground(null);
+                        ivCartEmpty.setVisibility(View.GONE);
                     }
-                    tvTotalCartPrice.setText(totalCartPrice + "");
+                    else{
+                        tvTotalCartPrice.setText("0");
+                        clCartPriceCheckout.setVisibility(View.GONE);
+//                        clCheckout.setVisibility(View.GONE);
+                        ivCartEmpty.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
@@ -94,10 +109,15 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
 
     @Override
     public void updateCartTotalPrice(int price) {
-        Log.e("Update price", price+"");
+        Log.e("Update price", price + "");
 
         totalCartPrice += price;
         tvTotalCartPrice.setText(totalCartPrice + "");
 
+        if (totalCartPrice == 0){
+            ivCartEmpty.setVisibility(View.VISIBLE);
+//            clCheckout.setVisibility(View.GONE);
+            clCartPriceCheckout.setVisibility(View.GONE);
+        }
     }
 }

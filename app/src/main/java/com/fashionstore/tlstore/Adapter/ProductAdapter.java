@@ -2,23 +2,32 @@ package com.fashionstore.tlstore.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.fashionstore.tlstore.API.CartAPI;
 import com.fashionstore.tlstore.Activity.ProductDetailActivity;
+import com.fashionstore.tlstore.Model.CartModel;
 import com.fashionstore.tlstore.Model.ProductModel;
 import com.fashionstore.tlstore.R;
+import com.fashionstore.tlstore.SharedPrefManager;
 
 import java.io.Serializable;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     List<ProductModel> productList;
@@ -28,7 +37,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         ImageView ivProduct;
         TextView tvProductName;
         TextView tvProductPrice;
-        ConstraintLayout layout;
+        ConstraintLayout layout, clAddProductToCart;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -39,7 +48,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             tvProductPrice = itemView.findViewById(R.id.tvProductPrice);
             layout = itemView.findViewById(R.id.clProduct);
 
+            clAddProductToCart = itemView.findViewById(R.id.clAddProductToCart);
+
         }
+
+
     }
 
     public ProductAdapter(List<ProductModel> list, Context context) {
@@ -72,8 +85,32 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             }
         });
 
-    }
+        int pos = position;
+        holder.clAddProductToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long userId = SharedPrefManager.getInstance(context).getUser().getId();
+                CartAPI.CART_API.addNewCart(productList.get(pos).getId(),userId, 1).enqueue(new Callback<CartModel>() {
+                    @Override
+                    public void onResponse(Call<CartModel> call, Response<CartModel> response) {
+                        if (response.isSuccessful()){
+                            CartModel cartModel = response.body();
+                            Log.e("Cart ID - ", String.valueOf(cartModel.getId()));
+                            Toast.makeText(context, "Add " +
+                                    cartModel.getQuantity() + " of \"" +
+                                    cartModel.getProduct().getProductName() +
+                                    "\" successful", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<CartModel> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+    }
     @Override
     public int getItemCount() {
         if (productList != null) {
