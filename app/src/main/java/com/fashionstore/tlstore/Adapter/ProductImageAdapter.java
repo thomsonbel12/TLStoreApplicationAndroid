@@ -16,8 +16,8 @@ import com.fashionstore.tlstore.R;
 import java.util.List;
 
 public class ProductImageAdapter extends PagerAdapter {
-    private Context mContext;
-    private List<ProductImageModel> productImages;
+    private final Context mContext;
+    private final List<ProductImageModel> productImages;
 
     public ProductImageAdapter(Context mContext, List<ProductImageModel> productImages) {
         this.mContext = mContext;
@@ -42,7 +42,7 @@ public class ProductImageAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.product_image_slider, container, false);
 
-        ImageView img = (ImageView) view.findViewById(R.id.ivProductImage);
+        ImageView img = view.findViewById(R.id.ivProductImage);
         ProductImageModel productImage = productImages.get(position);
         if(productImage != null){
             Glide.with(mContext).load(productImage.getImage()).into(img);

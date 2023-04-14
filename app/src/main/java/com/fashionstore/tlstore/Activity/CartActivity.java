@@ -1,10 +1,5 @@
 package com.fashionstore.tlstore.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +8,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fashionstore.tlstore.API.CartAPI;
 import com.fashionstore.tlstore.Adapter.CartAdapter;
@@ -29,6 +31,7 @@ import retrofit2.Response;
 
 public class CartActivity extends AppCompatActivity implements CartRecycleInterface {
     ConstraintLayout clHome, clCheckout, clCartPriceCheckout;
+    AppCompatButton appBarCartBtn;
     RecyclerView rvCart;
     TextView tvTotalCartPrice;
     ImageView ivCartEmpty;
@@ -39,7 +42,7 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//int flag, int mask
         setContentView(R.layout.activity_cart);
@@ -49,15 +52,20 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
         loadCart();
 
         backToHome();
+
+        refreshCart();
     }
 
     void anhXa() {
-        clHome = (ConstraintLayout) findViewById(R.id.clHomeAppBar);
-        clCheckout = (ConstraintLayout) findViewById(R.id.clCheckout);
-        clCartPriceCheckout = (ConstraintLayout) findViewById(R.id.clCartPriceCheckout);
-        rvCart = (RecyclerView) findViewById(R.id.rvCart);
-        ivCartEmpty = (ImageView) findViewById(R.id.ivCartEmpty);
-        tvTotalCartPrice = (TextView) findViewById(R.id.tvTotalCartPrice);
+        clHome = findViewById(R.id.clHomeAppBar);
+        clCheckout = findViewById(R.id.clCheckout);
+        clCartPriceCheckout = findViewById(R.id.clCartPriceCheckout);
+
+        rvCart = findViewById(R.id.rvCart);
+        ivCartEmpty = findViewById(R.id.ivCartEmpty);
+        tvTotalCartPrice = findViewById(R.id.tvTotalCartPrice);
+
+        appBarCartBtn = findViewById(R.id.appBarCartBtn);
     }
 
     void loadCart() {
@@ -66,7 +74,7 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
         CartRecycleInterface cartRecycleInterface = this;
         CartAPI.CART_API.getCartByUserId(SharedPrefManager.getInstance(this).getUser().getId()).enqueue(new Callback<List<CartModel>>() {
             @Override
-            public void onResponse(Call<List<CartModel>> call, Response<List<CartModel>> response) {
+            public void onResponse(@NonNull Call<List<CartModel>> call, @NonNull Response<List<CartModel>> response) {
                 if (response.isSuccessful()) {
                     cartList = response.body();
                     cartAdapter = new CartAdapter(cartRecycleInterface, cartList, CartActivity.this);
@@ -76,7 +84,7 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
                         for (CartModel c : cartList) {
                             totalCartPrice += c.getQuantity() * c.getProduct().getPrice();
                         }
-                        tvTotalCartPrice.setText(totalCartPrice + "");
+                        tvTotalCartPrice.setText(String.valueOf(totalCartPrice));
                         clCartPriceCheckout.setVisibility(View.VISIBLE);
 //                        ivCartEmpty.setBackground(null);
                         ivCartEmpty.setVisibility(View.GONE);
@@ -91,19 +99,22 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
             }
 
             @Override
-            public void onFailure(Call<List<CartModel>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<CartModel>> call, @NonNull Throwable t) {
                 Log.e("Cart API Error", "Call cart API fail");
             }
         });
     }
 
     void backToHome() {
-        clHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(CartActivity.this, MainActivity.class));
-                finish();
-            }
+        clHome.setOnClickListener(v -> {
+            startActivity(new Intent(CartActivity.this, MainActivity.class));
+            finish();
+        });
+    }
+    void refreshCart(){
+        appBarCartBtn.setOnClickListener(v ->{
+            startActivity(new Intent(CartActivity.this, CartActivity.class));
+            finish();
         });
     }
 
@@ -112,7 +123,7 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
         Log.e("Update price", price + "");
 
         totalCartPrice += price;
-        tvTotalCartPrice.setText(totalCartPrice + "");
+        tvTotalCartPrice.setText(String.valueOf(totalCartPrice));
 
         if (totalCartPrice == 0){
             ivCartEmpty.setVisibility(View.VISIBLE);

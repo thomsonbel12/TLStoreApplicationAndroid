@@ -1,13 +1,10 @@
 package com.fashionstore.tlstore.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -15,12 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.fashionstore.tlstore.API.UserAPI;
 import com.fashionstore.tlstore.Model.UserModel;
 import com.fashionstore.tlstore.R;
 import com.fashionstore.tlstore.SharedPrefManager;
-
-import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,37 +32,29 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//int flag, int mask
         setContentView(R.layout.activity_signup);
 
         anhXa();
-        toLoginPageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+        toLoginPageBtn.setOnClickListener(v -> {
+            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
 //                finish();
-            }
         });
 
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signUP();
-            }
-        });
+        signUp.setOnClickListener(v -> signUP());
     }
     public void anhXa(){
-        toLoginPageBtn = (TextView) findViewById(R.id.toLoginPageBtn);
-        signUp = (Button) findViewById(R.id.signupBtn);
+        toLoginPageBtn = findViewById(R.id.toLoginPageBtn);
+        signUp = findViewById(R.id.signupBtn);
 
-        username = (EditText) findViewById(R.id.usernameSignUpEdit);
-        name = (EditText) findViewById(R.id.nameSignUpEdit);
-        email = (EditText) findViewById(R.id.emailSignUpEdit);
-        phone = (EditText) findViewById(R.id.phoneSignUpEdit);
-        pass = (EditText) findViewById(R.id.passwordSignUpEdit);
-        re_pass = (EditText) findViewById(R.id.repasswordSignUpEdit);
+        username = findViewById(R.id.usernameSignUpEdit);
+        name = findViewById(R.id.nameSignUpEdit);
+        email = findViewById(R.id.emailSignUpEdit);
+        phone = findViewById(R.id.phoneSignUpEdit);
+        pass = findViewById(R.id.passwordSignUpEdit);
+        re_pass = findViewById(R.id.repasswordSignUpEdit);
     }
 
     public void signUP(){
@@ -90,7 +80,7 @@ public class SignupActivity extends AppCompatActivity {
             email.requestFocus();
             return;
         }
-        if(Patterns.EMAIL_ADDRESS.matcher(em).matches() == false){
+        if(!Patterns.EMAIL_ADDRESS.matcher(em).matches()){
             email.setError("Please enter a valid email");
             email.requestFocus();
             return;
@@ -100,7 +90,7 @@ public class SignupActivity extends AppCompatActivity {
             phone.requestFocus();
             return;
         }
-        if(ph.length() < 10 || ph.length() > 10){
+        if(ph.length() != 10){
             phone.setError("Please enter a valid Phone Number");
             phone.requestFocus();
             return;
@@ -123,11 +113,11 @@ public class SignupActivity extends AppCompatActivity {
 
         UserAPI.USER_API.checkExist(un).enqueue(new Callback<UserModel>() {
             @Override
-            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                if(response.isSuccessful() == false){
+            public void onResponse(@NonNull Call<UserModel> call, @NonNull Response<UserModel> response) {
+                if(!response.isSuccessful()){
                     UserAPI.USER_API.signup(un,n,em,ph,p).enqueue(new Callback<UserModel>() {
                         @Override
-                        public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                        public void onResponse(@NonNull Call<UserModel> call, @NonNull Response<UserModel> response) {
                             if(response.isSuccessful()){
                                 userModel = response.body();
                                 Log.e("=====", "Sign Up Success");
@@ -143,7 +133,7 @@ public class SignupActivity extends AppCompatActivity {
                             }
                         }
                         @Override
-                        public void onFailure(Call<UserModel> call, Throwable t) {
+                        public void onFailure(@NonNull Call<UserModel> call, @NonNull Throwable t) {
                             Log.e("=====", "Call Api Error");
                         }
                     });
@@ -155,7 +145,7 @@ public class SignupActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserModel> call, @NonNull Throwable t) {
 
             }
         });

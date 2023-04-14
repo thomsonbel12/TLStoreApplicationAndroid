@@ -6,11 +6,9 @@ import com.fashionstore.tlstore.Retrofit.RetrofitClient;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryName;
 
 public interface  ProductAPI {
 

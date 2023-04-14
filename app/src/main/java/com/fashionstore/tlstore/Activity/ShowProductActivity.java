@@ -1,5 +1,6 @@
 package com.fashionstore.tlstore.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,7 +60,7 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//int flag, int mask
 
@@ -82,19 +84,19 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
     }
 
     public void anhXa() {
-        userAvatar = (ImageView) findViewById(R.id.userAvatar);
-        ivNoProduct = (ImageView) findViewById(R.id.ivNoProduct);
+        userAvatar = findViewById(R.id.userAvatar);
+        ivNoProduct = findViewById(R.id.ivNoProduct);
 
-        rvCategory = (RecyclerView) findViewById(R.id.rvCategory);
-        rvShowProduct = (RecyclerView) findViewById(R.id.rvShowProduct);
+        rvCategory = findViewById(R.id.rvCategory);
+        rvShowProduct = findViewById(R.id.rvShowProduct);
 
-        appBarHomeBtn = (AppCompatButton) findViewById(R.id.appBarHomeBtn);
+        appBarHomeBtn = findViewById(R.id.appBarHomeBtn);
 
-        tvUserAction = (TextView) findViewById(R.id.tvUserAction);
-        tvShowAllProduct = (TextView) findViewById(R.id.tvShowAllProduct);
+        tvUserAction = findViewById(R.id.tvUserAction);
+        tvShowAllProduct = findViewById(R.id.tvShowAllProduct);
 
-        searchProductEdit = (EditText) findViewById(R.id.searchProductEdit);
-        clCart = (ConstraintLayout) findViewById(R.id.clCartAppBar);
+        searchProductEdit = findViewById(R.id.searchProductEdit);
+        clCart = findViewById(R.id.clCartAppBar);
 
 
         LinearLayoutManager layout = new GridLayoutManager(this, 2);
@@ -108,67 +110,57 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
         CategoryRecycleInterface categoryRecycleInterface = this;
         CategoryAPI.CATEGORY_API.getAllCategory().enqueue(new Callback<List<CategoryModel>>() {
             @Override
-            public void onResponse(Call<List<CategoryModel>> call, Response<List<CategoryModel>> response) {
+            public void onResponse(@NonNull Call<List<CategoryModel>> call, @NonNull Response<List<CategoryModel>> response) {
                 if (response.isSuccessful()) {
                     categoryList = response.body();
-//                    for(CategoryModel model : list){
-//                        Log.e(String.valueOf(model.getId()), " - "+ model.getName());
-//                    }
-//                    Log.e("Category list", list.get(0).getName().toString());
                     categoryAdapter = new CategoryAdapter(categoryList, ShowProductActivity.this, categoryRecycleInterface);
                     rvCategory.setAdapter(categoryAdapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<CategoryModel>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<CategoryModel>> call, @NonNull Throwable t) {
                 Log.e("=====", "Call Api Fail");
             }
         });
     }
 
     public void showAllProduct() {
-        tvShowAllProduct.setOnClickListener(new View.OnClickListener() {
+        tvShowAllProduct.setOnClickListener(v -> ProductAPI.PRODUCT_API.getAllProduct().enqueue(new Callback<List<ProductModel>>() {
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onClick(View v) {
-                ProductAPI.PRODUCT_API.getAllProduct().enqueue(new Callback<List<ProductModel>>() {
-                    @Override
-                    public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
-                        if (response.isSuccessful()) {
-                            productList = response.body();
-                            productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
-                            rvShowProduct.setAdapter(productAdapter);
-                            tvUserAction.setText("All products - " + productList.size() + " results");
+            public void onResponse(@NonNull Call<List<ProductModel>> call, @NonNull Response<List<ProductModel>> response) {
+                if (response.isSuccessful()) {
+                    productList = response.body();
+                    productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
+                    rvShowProduct.setAdapter(productAdapter);
+                    tvUserAction.setText("All products - " + productList.size() + " results");
 
-                            ivNoProduct.setVisibility(View.GONE);
+                    ivNoProduct.setVisibility(View.GONE);
 //                            rvShowProduct.setBac
-                        }
-                        if (productList == null) {
-                            ivNoProduct.setVisibility(View.VISIBLE);
+                }
+                if (productList == null) {
+                    ivNoProduct.setVisibility(View.VISIBLE);
 //                    ivNoProduct.setBackground(getDrawable(R.drawable.no_product_found));
-                            Log.e("=====Product", "Empty");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<ProductModel>> call, Throwable t) {
-
-                    }
-                });
+                    Log.e("=====Product", "Empty");
+                }
             }
-        });
+
+            @Override
+            public void onFailure(@NonNull Call<List<ProductModel>> call, @NonNull Throwable t) {
+
+            }
+        }));
     }
 
     public void backToHome() {
-        appBarHomeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
+        appBarHomeBtn.setOnClickListener(v -> {
+            finish();
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         });
     }
 
+    @SuppressLint("SetTextI18n")
     public void showProduct() {
         if (getIntent().getSerializableExtra("categoryId") != null) {
             long categoryId = (long) getIntent().getSerializableExtra("categoryId");
@@ -187,8 +179,9 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
 
     public void loadCategoryProduct(long id) {
         ProductAPI.PRODUCT_API.getProductByCategoryId(id).enqueue(new Callback<List<ProductModel>>() {
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
+            public void onResponse(@NonNull Call<List<ProductModel>> call, @NonNull Response<List<ProductModel>> response) {
 //                if (response.isSuccessful()) {
                 productList = response.body();
                 productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
@@ -204,43 +197,43 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
             }
 
             @Override
-            public void onFailure(Call<List<ProductModel>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<ProductModel>> call, @NonNull Throwable t) {
 
             }
         });
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onCategoryItemClick(int position) {
         tvUserAction.setText("Category - " + categoryList.get(position).getName());
         loadCategoryProduct(categoryList.get(position).getId());
     }
 
+    @SuppressLint("SetTextI18n")
     public void searchProduct() {
-        searchProductEdit.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    // Perform action on key press
-                    if (!TextUtils.isEmpty(String.valueOf(searchProductEdit.getText()))) {
-                        String name = String.valueOf(searchProductEdit.getText());
-                        tvUserAction.setText("Search for \"" + name + "\"");
-                        searchProductByName(name);
-                        closeKeyboard();
-                    }
-                    return true;
+        searchProductEdit.setOnKeyListener((v, keyCode, event) -> {
+            // If the event is a key-down event on the "enter" button
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                // Perform action on key press
+                if (!TextUtils.isEmpty(String.valueOf(searchProductEdit.getText()))) {
+                    String name = String.valueOf(searchProductEdit.getText());
+                    tvUserAction.setText("Search for \"" + name + "\"");
+                    searchProductByName(name);
+                    closeKeyboard();
                 }
-                return false;
+                return true;
             }
+            return false;
         });
     }
 
     public void searchProductByName(String name) {
         ProductAPI.PRODUCT_API.getProductByName(name).enqueue(new Callback<List<ProductModel>>() {
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
+            public void onResponse(@NonNull Call<List<ProductModel>> call, @NonNull Response<List<ProductModel>> response) {
 //                if(response.isSuccessful()){
                 productList = response.body();
                 productAdapter = new ProductAdapter(productList, ShowProductActivity.this);
@@ -258,19 +251,14 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
             }
 
             @Override
-            public void onFailure(Call<List<ProductModel>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<ProductModel>> call, @NonNull Throwable t) {
 
             }
         });
     }
 
     public void goToCart() {
-        clCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ShowProductActivity.this, CartActivity.class));
-            }
-        });
+        clCart.setOnClickListener(v -> startActivity(new Intent(ShowProductActivity.this, CartActivity.class)));
     }
 
     private void closeKeyboard() {

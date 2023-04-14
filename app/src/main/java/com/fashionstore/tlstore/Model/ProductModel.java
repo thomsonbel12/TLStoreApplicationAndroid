@@ -26,63 +26,32 @@ public class ProductModel {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
     public int getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public int getSold() {
         return sold;
     }
 
-    public void setSold(int sold) {
-        this.sold = sold;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public Boolean getActive() {
         return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
     }
 
     public CategoryModel getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryModel category) {
-        this.category = category;
-    }
-
     public List<ProductImageModel> getProductImages() {
         return productImages;
     }
 
-    public void setProductImages(List<ProductImageModel> productImages) {
-        this.productImages = productImages;
-    }
 }

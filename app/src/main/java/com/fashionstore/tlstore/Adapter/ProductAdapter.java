@@ -1,5 +1,6 @@
 package com.fashionstore.tlstore.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -22,7 +23,6 @@ import com.fashionstore.tlstore.Model.ProductModel;
 import com.fashionstore.tlstore.R;
 import com.fashionstore.tlstore.SharedPrefManager;
 
-import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,7 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     List<ProductModel> productList;
     Context context;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivProduct;
         TextView tvProductName;
         TextView tvProductPrice;
@@ -67,6 +67,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
 
@@ -76,25 +77,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         ProductModel product = productList.get(position);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), ProductDetailActivity.class);
-                intent.putExtra("productId", product.getId());
-                holder.itemView.getContext().startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), ProductDetailActivity.class);
+            intent.putExtra("productId", product.getId());
+            holder.itemView.getContext().startActivity(intent);
         });
 
-        int pos = position;
-        holder.clAddProductToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                long userId = SharedPrefManager.getInstance(context).getUser().getId();
-                CartAPI.CART_API.addNewCart(productList.get(pos).getId(),userId, 1).enqueue(new Callback<CartModel>() {
-                    @Override
-                    public void onResponse(Call<CartModel> call, Response<CartModel> response) {
-                        if (response.isSuccessful()){
-                            CartModel cartModel = response.body();
+        holder.clAddProductToCart.setOnClickListener(v -> {
+            long userId = SharedPrefManager.getInstance(context).getUser().getId();
+            CartAPI.CART_API.addNewCart(productList.get(position).getId(),userId, 1).enqueue(new Callback<CartModel>() {
+                @Override
+                public void onResponse(@NonNull Call<CartModel> call, @NonNull Response<CartModel> response) {
+                    if (response.isSuccessful()){
+                        CartModel cartModel = response.body();
+                        if (cartModel != null){
                             Log.e("Cart ID - ", String.valueOf(cartModel.getId()));
                             Toast.makeText(context, "Add " +
                                     cartModel.getQuantity() + " of \"" +
@@ -102,13 +98,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                                     "\" successful", Toast.LENGTH_SHORT).show();
                         }
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<CartModel> call, Throwable t) {
+                @Override
+                public void onFailure(@NonNull Call<CartModel> call, @NonNull Throwable t) {
 
-                    }
-                });
-            }
+                }
+            });
         });
     }
     @Override

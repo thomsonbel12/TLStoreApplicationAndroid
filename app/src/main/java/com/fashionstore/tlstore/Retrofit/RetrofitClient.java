@@ -1,6 +1,5 @@
 package com.fashionstore.tlstore.Retrofit;
 
-import com.fashionstore.tlstore.API.UserAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -8,18 +7,21 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-        public final String BASE_URL = "http://172.20.10.3:8080";
+//    public final String BASE_URL = "http://172.16.30.127:8080";
+//    public final String BASE_URL = "http://172.20.10.10:8080";
 //    public final String BASE_URL = "http://192.168.1.100:8080";
 //    public final String BASE_URL = "http://192.168.1.101:8080";
 //    public final String BASE_URL = "http://192.168.1.102:8080";
-//    public final String BASE_URL = "http://172.20.10.10:8080";
+    public final String BASE_URL = "http://172.20.10.3:8080";
 //    public final String BASE_URL = "http://172.20.10.10:8080";
 //    public final String BASE_URL = "http://192.168.1.103:8080";
 //    public final String BASE_URL = "http://172.16.31.82:8080";
 //    public final String BASE_URL = "http://192.168.1.104:8080";
 
 
-    Gson gson = new GsonBuilder().setDateFormat("yyyy MM d HH:mm:ss").create();
+    Gson gson = new GsonBuilder()
+//            .setLenient()
+            .setDateFormat("yyyy MM d HH:mm:ss").create();
     public static RetrofitClient retrofitClient;
     private Retrofit retrofit;
 

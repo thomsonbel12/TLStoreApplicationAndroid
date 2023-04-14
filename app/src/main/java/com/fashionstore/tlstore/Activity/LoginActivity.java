@@ -1,18 +1,18 @@
 package com.fashionstore.tlstore.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fashionstore.tlstore.API.UserAPI;
 import com.fashionstore.tlstore.Model.UserModel;
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//int flag, int mask
 
@@ -47,24 +47,16 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        username = (EditText) findViewById(R.id.usernameEdit);
-        password = (EditText) findViewById(R.id.passwordEdit);
-        loginBtn = (Button) findViewById(R.id.loginBtn);
-        toSignUpPageBtn = (TextView) findViewById(R.id.toSignupPageBtn);
+        username = findViewById(R.id.usernameEdit);
+        password = findViewById(R.id.passwordEdit);
+        loginBtn = findViewById(R.id.loginBtn);
+        toSignUpPageBtn = findViewById(R.id.toSignupPageBtn);
 
-        toSignUpPageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+        toSignUpPageBtn.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, SignupActivity.class));
 //                finish();
-            }
         });
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+        loginBtn.setOnClickListener(v -> login());
 
     }
 
@@ -83,13 +75,15 @@ public class LoginActivity extends AppCompatActivity {
         }
         UserAPI.USER_API.login(u, p).enqueue(new Callback<UserModel>() {
             @Override
-            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+            public void onResponse(@NonNull Call<UserModel> call, @NonNull Response<UserModel> response) {
                 if (response.isSuccessful()) {
                     userModel = response.body();
-                    Toast.makeText(LoginActivity.this, userModel.getEmail(), Toast.LENGTH_SHORT).show();
-                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(userModel);
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                    if(userModel != null){
+                        Toast.makeText(LoginActivity.this, userModel.getEmail(), Toast.LENGTH_SHORT).show();
+                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(userModel);
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    }
                 } else {
                     Log.e("======", "login fail");
                     Toast.makeText(LoginActivity.this, "Wrong username or password !!", Toast.LENGTH_SHORT).show();
@@ -98,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserModel> call, @NonNull Throwable t) {
                 Log.e("======", "call api fail");
             }
         });

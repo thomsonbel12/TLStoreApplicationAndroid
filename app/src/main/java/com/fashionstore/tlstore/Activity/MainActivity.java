@@ -1,34 +1,34 @@
 package com.fashionstore.tlstore.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.fashionstore.tlstore.API.CategoryAPI;
 import com.fashionstore.tlstore.API.ProductAPI;
+import com.fashionstore.tlstore.Adapter.CategoryAdapter;
+import com.fashionstore.tlstore.Adapter.ProductAdapter;
 import com.fashionstore.tlstore.Interface.CategoryRecycleInterface;
 import com.fashionstore.tlstore.Model.CategoryModel;
 import com.fashionstore.tlstore.Model.ProductModel;
 import com.fashionstore.tlstore.Model.UserModel;
 import com.fashionstore.tlstore.R;
 import com.fashionstore.tlstore.SharedPrefManager;
-import com.fashionstore.tlstore.Adapter.CategoryAdapter;
-import com.fashionstore.tlstore.Adapter.ProductAdapter;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title not the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//int flag, int mask
         setContentView(R.layout.activity_main);
@@ -77,15 +77,15 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
     }
 
     public void anhXa() {
-        userAvatar = (ImageView) findViewById(R.id.userAvatar);
+        userAvatar = findViewById(R.id.userAvatar);
 
-        rvCategory = (RecyclerView) findViewById(R.id.rvCategory);
-        rvPopularProduct = (RecyclerView) findViewById(R.id.rvPopularProduct);
-        rvLatestProduct = (RecyclerView) findViewById(R.id.rvLatestProduct);
+        rvCategory = findViewById(R.id.rvCategory);
+        rvPopularProduct = findViewById(R.id.rvPopularProduct);
+        rvLatestProduct = findViewById(R.id.rvLatestProduct);
 
-        appBarHomeBtn = (AppCompatButton) findViewById(R.id.appBarHomeBtn);
-        clCart = (ConstraintLayout) findViewById(R.id.clCartAppBar);
-        searchProductEdit = (EditText) findViewById(R.id.searchProductEdit);
+        appBarHomeBtn = findViewById(R.id.appBarHomeBtn);
+        clCart = findViewById(R.id.clCartAppBar);
+        searchProductEdit = findViewById(R.id.searchProductEdit);
     }
 
     public void loadCategory() {
@@ -95,20 +95,16 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
 
         CategoryAPI.CATEGORY_API.getAllCategory().enqueue(new Callback<List<CategoryModel>>() {
             @Override
-            public void onResponse(Call<List<CategoryModel>> call, Response<List<CategoryModel>> response) {
+            public void onResponse(@NonNull Call<List<CategoryModel>> call, @NonNull Response<List<CategoryModel>> response) {
                 if (response.isSuccessful()) {
                     categoryList = response.body();
-//                    for(CategoryModel model : list){
-//                        Log.e(String.valueOf(model.getId()), " - "+ model.getName());
-//                    }
-//                    Log.e("Category list", list.get(0).getName().toString());
                     categoryAdapter = new CategoryAdapter(categoryList, MainActivity.this, categoryRecycleInterface);
                     rvCategory.setAdapter(categoryAdapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<CategoryModel>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<CategoryModel>> call, @NonNull Throwable t) {
                 Log.e("=====Load Category", "Call Api Fail");
             }
         });
@@ -121,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
         rvPopularProduct.setLayoutManager(layout);
         ProductAPI.PRODUCT_API.getTop10BestSelling().enqueue(new Callback<List<ProductModel>>() {
             @Override
-            public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
+            public void onResponse(@NonNull Call<List<ProductModel>> call, @NonNull Response<List<ProductModel>> response) {
                 if (response.isSuccessful()) {
                     List<ProductModel> productModels = response.body();
                     productAdapter = new ProductAdapter(productModels, MainActivity.this);
@@ -132,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
             }
 
             @Override
-            public void onFailure(Call<List<ProductModel>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<ProductModel>> call, @NonNull Throwable t) {
 
             }
         });
@@ -144,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
         rvLatestProduct.setLayoutManager(layout);
         ProductAPI.PRODUCT_API.getTop10Newest().enqueue(new Callback<List<ProductModel>>() {
             @Override
-            public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
+            public void onResponse(@NonNull Call<List<ProductModel>> call, @NonNull Response<List<ProductModel>> response) {
                 if (response.isSuccessful()) {
                     List<ProductModel> productModels = response.body();
                     productAdapter = new ProductAdapter(productModels, MainActivity.this);
@@ -155,23 +151,19 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
             }
 
             @Override
-            public void onFailure(Call<List<ProductModel>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<ProductModel>> call, @NonNull Throwable t) {
 
             }
         });
     }
 
     public void backToHome() {
-        appBarHomeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
+        appBarHomeBtn.setOnClickListener(v -> {
+            finish();
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         });
     }
 
-    List<ProductModel> listCategoryProduct;
     @Override
     public void onCategoryItemClick(int position) {
         if (!(getApplicationContext().toString().contains("ShowProductActivity"))) {
@@ -184,32 +176,24 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
     }
 
     public void searchProduct(){
-        searchProductEdit.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    // Perform action on key press
-                    if(!TextUtils.isEmpty(String.valueOf(searchProductEdit.getText()))){
-                        Intent intent = new Intent(MainActivity.this, ShowProductActivity.class);
-                        intent.putExtra("searchProduct", String.valueOf(searchProductEdit.getText()));
-                        startActivity(intent);
-                    }
-
-                    return true;
+        searchProductEdit.setOnKeyListener((v, keyCode, event) -> {
+            // If the event is a key-down event on the "enter" button
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                // Perform action on key press
+                if(!TextUtils.isEmpty(String.valueOf(searchProductEdit.getText()))){
+                    Intent intent = new Intent(MainActivity.this, ShowProductActivity.class);
+                    intent.putExtra("searchProduct", String.valueOf(searchProductEdit.getText()));
+                    startActivity(intent);
                 }
-                return false;
+
+                return true;
             }
+            return false;
         });
     }
 
     public void goToCart(){
-        clCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CartActivity.class));
-            }
-        });
+        clCart.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
     }
 }

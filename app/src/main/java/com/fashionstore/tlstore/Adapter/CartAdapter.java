@@ -1,5 +1,6 @@
 package com.fashionstore.tlstore.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +44,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         ConstraintLayout clDecrease, clIncrease, clDelete;
 
 
-        public ViewHolder(@NonNull View itemView, CartRecycleInterface cartRecycleInterface) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProductImg = itemView.findViewById(R.id.ivProductImgCart);
 
@@ -56,26 +57,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             clIncrease = itemView.findViewById(R.id.clIncreaseCartQuantity);
             clDelete = itemView.findViewById(R.id.clDeleteCart);
 
-            clDecrease.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    decreaseCart();
-                }
-            });
+            clDecrease.setOnClickListener(v -> decreaseCart());
 
-            clIncrease.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    increaseCart();
-                }
-            });
+            clIncrease.setOnClickListener(v -> increaseCart());
 
-            clDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    deleteCart();
-                }
-            });
+            clDelete.setOnClickListener(v -> deleteCart());
         }
 
         public void decreaseCart() {
@@ -99,7 +85,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 cartList.get(getAdapterPosition()).setQuantity(cartNumber);
                 updateCartAPI(cartList.get(getAdapterPosition()).getId(), cartNumber);
 
-                cartRecycleInterface.updateCartTotalPrice((1) * cartList.get(getAdapterPosition()).getProduct().getPrice());
+                cartRecycleInterface.updateCartTotalPrice(cartList.get(getAdapterPosition()).getProduct().getPrice());
             }
 
         }
@@ -119,14 +105,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
         public void updateCartAPI(long cartId, int cartNumber) {
             CartAPI.CART_API.updateCartQuantity(cartId, cartNumber).enqueue(new Callback<CartModel>() {
+                @SuppressLint("SetTextI18n")
                 @Override
-                public void onResponse(Call<CartModel> call, Response<CartModel> response) {
+                public void onResponse(@NonNull Call<CartModel> call, @NonNull Response<CartModel> response) {
                     tvCartQuantity.setText(cartNumber + "");
                     tvCartPrice.setText((cartNumber * cartList.get(getAdapterPosition()).getProduct().getPrice()) + "");
                 }
 
                 @Override
-                public void onFailure(Call<CartModel> call, Throwable t) {
+                public void onFailure(@NonNull Call<CartModel> call, @NonNull Throwable t) {
                     Log.e("CAll cart api", "Fail");
                 }
             });
@@ -135,15 +122,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         public void deleteCartAPI(long cartId){
             CartAPI.CART_API.deleteCart(cartId).enqueue(new Callback<String>() {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if(response.isSuccessful()){
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+//                    if(response.isSuccessful()){
                         Toast.makeText(context, response.body(), Toast.LENGTH_SHORT).show();
-                    }
+//                    }
                 }
 
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    Log.e("CAll Delete Cart API", "fail");
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    Log.e("CAll Delete Cart API", t.getMessage());
                 }
             });
         }
@@ -154,9 +141,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public CartAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_recycle_cart_test, parent, false);
 
-        return new ViewHolder(view, cartRecycleInterface);
+        return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
         Glide.with(context).load(cartList.get(position).getProduct().getProductImages().get(0).getImage()).into(holder.ivProductImg);

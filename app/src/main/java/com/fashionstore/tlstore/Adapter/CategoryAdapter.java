@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fashionstore.tlstore.Interface.CategoryRecycleInterface;
@@ -30,7 +29,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ConstraintLayout layout;
         ImageView imageView;
         TextView textView;
         TextView categoryId;
@@ -44,14 +42,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             categoryId = itemView.findViewById(R.id.tvCategoryId);
 //            tvUserAction = itemView.findViewById(R.id.tvUserAction);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(categoryRecycleInterface != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            categoryRecycleInterface.onCategoryItemClick(position);
-                        }
+            itemView.setOnClickListener(v -> {
+                if(categoryRecycleInterface != null){
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        categoryRecycleInterface.onCategoryItemClick(position);
                     }
                 }
             });
@@ -61,7 +56,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @NonNull
     @Override
     public CategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_recycle_category, parent, false);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_recycle_category_no_img, parent, false);
         return new ViewHolder(view, categoryRecycleInterface);
     }
@@ -70,9 +64,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
         holder.textView.setText(categoryModels.get(position).getName());
         holder.categoryId.setText(String.valueOf(categoryModels.get(position).getId()));
-//        Glide.with(context)
-//                .load(categoryModels.get(position).getImage())
-//                .into(holder.imageView);
     }
 
     @Override
