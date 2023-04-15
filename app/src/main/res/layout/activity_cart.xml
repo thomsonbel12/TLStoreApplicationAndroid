@@ -52,6 +52,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.6" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/count_cart_item"
+            app:layout_constraintBottom_toBottomOf="@+id/textView19"
+            app:layout_constraintStart_toEndOf="@+id/textView19"
+            app:layout_constraintTop_toTopOf="@+id/textView19"
+            app:layout_constraintVertical_bias="0.466">
+
+            <TextView
+                android:id="@+id/tvTotalCartItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:text=" Items"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTotalCartItem"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvTotalCartItem"
+                app:layout_constraintTop_toTopOf="@+id/tvTotalCartItem" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -59,7 +99,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="12dp"
         android:background="#f7f6f0"
-        app:layout_constraintBottom_toTopOf="@+id/clCartPriceCheckout"
+        app:layout_constraintBottom_toTopOf="@+id/clProceedToPayment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
@@ -78,7 +118,8 @@
                 android:id="@+id/rvCart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:elevation="3dp" />
+                android:elevation="3dp"
+                tools:listitem="@layout/viewholder_recycle_cart_test" />
 
             <ImageView
                 android:id="@+id/ivCartEmpty"
@@ -91,7 +132,7 @@
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clCartPriceCheckout"
+        android:id="@+id/clProceedToPayment"
         android:layout_width="0dp"
         android:layout_height="160dp"
         android:background="@drawable/round_top_corner_edece3"

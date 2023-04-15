@@ -110,6 +110,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 public void onResponse(@NonNull Call<CartModel> call, @NonNull Response<CartModel> response) {
                     tvCartQuantity.setText(cartNumber + "");
                     tvCartPrice.setText((cartNumber * cartList.get(getAdapterPosition()).getProduct().getPrice()) + "");
+//                    notifyItemChanged(getAdapterPosition());
                 }
 
                 @Override

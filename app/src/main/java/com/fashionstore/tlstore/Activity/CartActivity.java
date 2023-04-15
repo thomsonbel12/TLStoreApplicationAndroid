@@ -34,6 +34,7 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
     AppCompatButton appBarCartBtn;
     RecyclerView rvCart;
     TextView tvTotalCartPrice;
+    TextView tvTotalCartItem;
     ImageView ivCartEmpty;
     List<CartModel> cartList;
     CartAdapter cartAdapter;
@@ -51,6 +52,8 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
 
         loadCart();
 
+        goToCheckout();
+
         backToHome();
 
         refreshCart();
@@ -59,12 +62,13 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
     void anhXa() {
         clHome = findViewById(R.id.clHomeAppBar);
         clCheckout = findViewById(R.id.clCheckout);
-        clCartPriceCheckout = findViewById(R.id.clCartPriceCheckout);
+        clCartPriceCheckout = findViewById(R.id.clProceedToPayment);
 
         rvCart = findViewById(R.id.rvCart);
         ivCartEmpty = findViewById(R.id.ivCartEmpty);
-        tvTotalCartPrice = findViewById(R.id.tvTotalCartPrice);
 
+        tvTotalCartPrice = findViewById(R.id.tvTotalCartPrice);
+        tvTotalCartItem = findViewById(R.id.tvTotalCartItem);
         appBarCartBtn = findViewById(R.id.appBarCartBtn);
     }
 
@@ -84,6 +88,7 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
                         for (CartModel c : cartList) {
                             totalCartPrice += c.getQuantity() * c.getProduct().getPrice();
                         }
+                        tvTotalCartItem.setText(String.valueOf(cartList.size()));
                         tvTotalCartPrice.setText(String.valueOf(totalCartPrice));
                         clCartPriceCheckout.setVisibility(View.VISIBLE);
 //                        ivCartEmpty.setBackground(null);
@@ -130,5 +135,10 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
 //            clCheckout.setVisibility(View.GONE);
             clCartPriceCheckout.setVisibility(View.GONE);
         }
+    }
+    public void goToCheckout(){
+        clCheckout.setOnClickListener(v -> {
+            startActivity(new Intent(CartActivity.this, SelectAddressActivity.class));
+        });
     }
 }

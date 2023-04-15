@@ -6,6 +6,13 @@ import android.content.SharedPreferences;
 
 import com.fashionstore.tlstore.Activity.LoginActivity;
 import com.fashionstore.tlstore.Model.UserModel;
+import com.fashionstore.tlstore.Object.DeliveryDetail;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SharedPrefManager {
     private static SharedPrefManager mInstance;
@@ -22,6 +29,7 @@ public class SharedPrefManager {
     }
 
     private static final String SHARE_PREF_NAME = "userLogin";
+    private static final String SHARE_PREF_ADDRESS = "deliveryAddress";
 
     private static final String KEY_ID = "userId";
     private static final String KEY_USERNAME = "username";
@@ -30,6 +38,8 @@ public class SharedPrefManager {
     private static final String KEY_PHONE = "phone";
 
     private static final String KEY_IMAGES = "avatar";
+
+
 
     public void userLogin(UserModel user){
         SharedPreferences preferences = mCtx.getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE);
@@ -64,5 +74,33 @@ public class SharedPrefManager {
         editor.clear();
         editor.apply();
         mCtx.startActivity(new Intent(mCtx, LoginActivity.class));
+    }
+
+    public static void set(String key, String value) {
+        SharedPreferences preferences = mCtx.getSharedPreferences(SHARE_PREF_ADDRESS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+    public <T> void setList(String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+
+        set(key, json);
+    }
+
+
+
+    public List<DeliveryDetail> getDeliveryDetail(){
+        List<DeliveryDetail> arrayItems = new ArrayList<>();
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARE_PREF_ADDRESS, Context.MODE_PRIVATE);
+        String serializedObject = sharedPreferences.getString("DeliveryList", null);
+        if (serializedObject != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<DeliveryDetail>>(){}.getType();
+            arrayItems = gson.fromJson(serializedObject, type);
+        }
+
+        return arrayItems;
     }
 }
