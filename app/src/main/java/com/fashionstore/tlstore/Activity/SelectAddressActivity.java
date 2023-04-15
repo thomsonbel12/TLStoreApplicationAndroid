@@ -1,20 +1,13 @@
 package com.fashionstore.tlstore.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,12 +15,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.fashionstore.tlstore.Adapter.DeliveryDetailAdapter;
 import com.fashionstore.tlstore.Interface.DeliveryAddressSelectInterface;
 import com.fashionstore.tlstore.Object.DeliveryDetail;
 import com.fashionstore.tlstore.R;
 import com.fashionstore.tlstore.SharedPrefManager;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +39,7 @@ public class SelectAddressActivity extends AppCompatActivity implements Delivery
 
     ImageView ivNoAddressFound;
 
+    AppCompatButton proceedToPaymentBtn;
     int position = -1;
     List<DeliveryDetail> deliveryDetails = new ArrayList<>();
 
@@ -57,13 +56,14 @@ public class SelectAddressActivity extends AppCompatActivity implements Delivery
         clBackBtn.setOnClickListener(v -> onBackPressed());
 
         loadAddress();
-
+        proceedToPayment();
         clAddNewDeliveryAddress.setOnClickListener(v -> openAddAddressDialog());
     }
 
     void anhXa() {
         ivNoAddressFound = findViewById(R.id.ivNoAddressFound);
         rvDeliveryAddress = findViewById(R.id.rvDeliveryAddress);
+        proceedToPaymentBtn = findViewById(R.id.proceedToPaymentBtn);
         clAddNewDeliveryAddress = findViewById(R.id.clAddNewDeliveryAddress);
         clProceedToPayment = findViewById(R.id.clProceedToPayment);
         clBackBtn = findViewById(R.id.clbackBtn);
@@ -72,14 +72,6 @@ public class SelectAddressActivity extends AppCompatActivity implements Delivery
     public void loadAddress() {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvDeliveryAddress.setLayoutManager(manager);
-
-//        List<DeliveryDetail> list = new ArrayList<>();
-//        list.add(new DeliveryDetail("Thanh Thao", "0974991941", "61/11, Đường Hàng Tre, Tầng 2, Quận 9, TP.Thủ Đức, TP.Hồ Chí Minh."));
-//        list.add(new DeliveryDetail("Cong Tu", "0974991941", "61/11, Đường Hàng Tre, Tầng 2, Quận 9, TP.Thủ Đức, TP.Hồ Chí Minh."));
-//        deliveryDetails = SharedPrefManager.getInstance(this).getDeliveryDetail();
-
-//        deliveryDetails.add(new DeliveryDetail("Hoang Lam", "0974991941", "61/11, Đường Hàng Tre, Tầng 2, Quận 9, TP.Thủ Đức, TP.Hồ Chí Minh."));
-//        SharedPrefManager.getInstance(this).setList("DeliveryList", deliveryDetails);
 
         deliveryDetails = SharedPrefManager.getInstance(this).getDeliveryDetail();
         if (deliveryDetails.size() == 0) {
@@ -96,6 +88,7 @@ public class SelectAddressActivity extends AppCompatActivity implements Delivery
         rvDeliveryAddress.setAdapter(deliveryDetailAdapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void openAddAddressDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -108,10 +101,6 @@ public class SelectAddressActivity extends AppCompatActivity implements Delivery
 
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-//        WindowManager.LayoutParams windowAttributes = window.getAttributes();
-//        windowAttributes.gravity = Gravity.CENTER;
-//        window.setAttributes(windowAttributes);
 
         dialog.setCancelable(true);
 
@@ -152,18 +141,27 @@ public class SelectAddressActivity extends AppCompatActivity implements Delivery
             }
         });
 
-        cancel.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
+        cancel.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }
-
+    public void proceedToPayment(){
+        proceedToPaymentBtn.setOnClickListener(v -> {
+            if(position != -1){
+                Intent intent = new Intent(SelectAddressActivity.this, SelectPaymentActivity.class);
+                intent.putExtra("deliveryDetailPos", position);
+                startActivity(intent);
+            }else{
+                Toast.makeText(SelectAddressActivity.this, "You are not select any Delivery Address!!!\nPlease select one!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onDeliveryDetailClick(int position) {
         Toast.makeText(this, "Selected: " + position, Toast.LENGTH_SHORT).show();
-        deliveryDetailAdapter.notifyDataSetChanged();
-
+//        deliveryDetailAdapter.notifyDataSetChanged();
+        rvDeliveryAddress.post(() -> deliveryDetailAdapter.notifyDataSetChanged());
         this.position = position;
     }
 
