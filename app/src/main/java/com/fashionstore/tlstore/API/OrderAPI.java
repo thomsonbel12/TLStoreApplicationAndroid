@@ -3,10 +3,15 @@ package com.fashionstore.tlstore.API;
 import com.fashionstore.tlstore.Model.OrderModel;
 import com.fashionstore.tlstore.Retrofit.RetrofitClient;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface OrderAPI {
     RetrofitClient RETROFIT_CLIENT = new RetrofitClient();
@@ -18,4 +23,7 @@ public interface OrderAPI {
     Call<OrderModel> addCartToOrder(@Field("userId") long id,
                                     @Field("address") String address,
                                     @Field("phoneNumber") String phone);
+
+    @GET("/Order/id")
+    Call<List<OrderModel>> getAllOrderByUserId(@Query("userId") Long id);
 }

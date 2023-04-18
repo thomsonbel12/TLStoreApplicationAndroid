@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-//    public final String BASE_URL = "http://172.16.30.127:8080";
+//    public final String BASE_URL = "http://172.16.30.254:8080";
 //    public final String BASE_URL = "http://172.20.10.10:8080";
 //    public final String BASE_URL = "http://192.168.1.100:8080";
 //    public final String BASE_URL = "http://192.168.1.101:8080";
@@ -17,7 +17,6 @@ public class RetrofitClient {
 //    public final String BASE_URL = "http://192.168.1.103:8080";
 //    public final String BASE_URL = "http://172.16.31.82:8080";
 //    public final String BASE_URL = "http://192.168.1.105:8080";
-
 
     Gson gson = new GsonBuilder()
 //            .setLenient()

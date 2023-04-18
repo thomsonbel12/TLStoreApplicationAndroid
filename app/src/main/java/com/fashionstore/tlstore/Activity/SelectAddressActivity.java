@@ -111,7 +111,7 @@ public class SelectAddressActivity extends AppCompatActivity implements Delivery
         AppCompatButton add = dialog.findViewById(R.id.addAddressBtn);
         AppCompatButton cancel = dialog.findViewById(R.id.dialogCancleBtn);
 
-
+        receiverNameEdit.setText(SharedPrefManager.getInstance(this).getUser().getName());
         add.setOnClickListener(v -> {
             String u = String.valueOf(receiverNameEdit.getText());
             String p = String.valueOf(receiverPhoneEdit.getText());
@@ -126,18 +126,17 @@ public class SelectAddressActivity extends AppCompatActivity implements Delivery
                 ivNoAddressFound.setVisibility(View.GONE);
                 cancel.performClick();
             }
-            if (TextUtils.isEmpty(u)) {
-                receiverNameEdit.setError("Please enter receiver name");
-                receiverNameEdit.requestFocus();
+            if (TextUtils.isEmpty(a)) {
+                receiverAddressEdit.setError("Please enter receiver address");
+                receiverAddressEdit.requestFocus();
             }
             if (TextUtils.isEmpty(p)) {
                 receiverPhoneEdit.setError("Please enter receiver phone");
                 receiverPhoneEdit.requestFocus();
             }
-
-            if (TextUtils.isEmpty(a)) {
-                receiverAddressEdit.setError("Please enter receiver address");
-                receiverAddressEdit.requestFocus();
+            if (TextUtils.isEmpty(u)) {
+                receiverNameEdit.setError("Please enter receiver name");
+                receiverNameEdit.requestFocus();
             }
         });
 
@@ -176,4 +175,11 @@ public class SelectAddressActivity extends AppCompatActivity implements Delivery
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
+        startActivity(new Intent(SelectAddressActivity.this, CartActivity.class));
+    }
 }

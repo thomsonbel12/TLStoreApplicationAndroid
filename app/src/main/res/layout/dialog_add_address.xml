@@ -54,6 +54,7 @@
                 android:background="@drawable/edittext_white_blackborder"
                 android:elevation="3dp"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="Receiver Name"
                 android:inputType="textPersonName"
                 android:paddingStart="16dp"

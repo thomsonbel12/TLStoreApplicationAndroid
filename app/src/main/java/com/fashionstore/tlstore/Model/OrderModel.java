@@ -1,5 +1,6 @@
 package com.fashionstore.tlstore.Model;
 
+import java.util.Date;
 import java.util.List;
 
 public class OrderModel {
@@ -14,6 +15,9 @@ public class OrderModel {
     private int total;
 
     private UserModel user;
+
+    private Date createAt;
+
 
     private List<OrderItemModel> orderItems;
 
@@ -71,5 +75,13 @@ public class OrderModel {
 
     public void setOrderItems(List<OrderItemModel> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 }

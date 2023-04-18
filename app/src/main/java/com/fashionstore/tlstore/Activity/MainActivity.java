@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
     ImageView userAvatar;
     EditText searchProductEdit;
 
-    ConstraintLayout clCart;
+    ConstraintLayout clCart, clOrder;
 
     CategoryAdapter categoryAdapter;
     ProductAdapter productAdapter;
@@ -74,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
 
         backToHome();
         goToCart();
+
+        clOrder.setOnClickListener(v -> {
+//            finish();
+            startActivity(new Intent(MainActivity.this, OrdersActivity.class));
+        });
     }
 
     public void anhXa() {
@@ -85,7 +90,11 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
 
         appBarHomeBtn = findViewById(R.id.appBarHomeBtn);
         clCart = findViewById(R.id.clCartAppBar);
+        clOrder = findViewById(R.id.clOrderAppBar);
         searchProductEdit = findViewById(R.id.searchProductEdit);
+
+
+
     }
 
     public void loadCategory() {

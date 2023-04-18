@@ -1,6 +1,7 @@
 package com.fashionstore.tlstore.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -131,8 +132,13 @@ public class SelectPaymentActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<OrderModel> call, @NonNull Response<OrderModel> response) {
                     if (response.isSuccessful()) {
                         OrderModel orderModel = response.body();
-                        if (orderModel != null)
+                        if (orderModel != null){
                             Toast.makeText(SelectPaymentActivity.this, "Your Order Id: " + orderModel.getId(), Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(SelectPaymentActivity.this, BillActivity.class).putExtra("orderId", orderModel.getId()));
+                        }
+                    }else{
+                        Toast.makeText(SelectPaymentActivity.this, "Your Order is not accepted !!!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
