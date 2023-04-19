@@ -54,6 +54,7 @@ public class OrdersActivity extends AppCompatActivity {
 
         toHome();
         toCart();
+        toProfile();
         reloadOrders();
     }
     void loadOrder(){
@@ -77,6 +78,7 @@ public class OrdersActivity extends AppCompatActivity {
                             LinearLayoutManager layout = new LinearLayoutManager(OrdersActivity.this, LinearLayoutManager.VERTICAL, false);
                             rvOrderList.setLayoutManager(layout);
                             orderAdapter = new OrderAdapter(orderList, OrdersActivity.this);
+                            rvOrderList.setNestedScrollingEnabled(true);
                             rvOrderList.setAdapter(orderAdapter);
                         }else{
                             Toast.makeText(OrdersActivity.this, "Empty Order!!", Toast.LENGTH_SHORT).show();
@@ -124,6 +126,12 @@ public class OrdersActivity extends AppCompatActivity {
         clCart.setOnClickListener(v -> {
             finish();
             startActivity(new Intent(OrdersActivity.this, CartActivity.class));
+        });
+    }
+    void toProfile(){
+        clProfile.setOnClickListener(v -> {
+            finish();
+            startActivity(new Intent(OrdersActivity.this, ProfileActivity.class));
         });
     }
 

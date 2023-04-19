@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f6f0"
+    tools:context=".Activity.ProfileActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#f7f6f0"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:isScrollContainer="false"
+            android:nestedScrollingEnabled="false"
+            app:backgroundTint="#f7f6f0"
+            app:layout_anchor="@+id/linearLayout4"
+            app:layout_anchorGravity="top|center" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="26dp"
+            android:layout_marginEnd="26dp"
+            android:gravity="center"
+            android:isScrollContainer="false"
+            android:nestedScrollingEnabled="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:background="@drawable/unselect_bar_background"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="3dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="3dp"
+                android:paddingRight="3dp"
+                android:paddingBottom="3dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clHomeAppBar"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/unselect_bar_item">
+
+                    <ImageView
+                        android:id="@+id/imageView10"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/icons8_white_home_" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clCartAppBar"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/unselect_bar_item">
+
+                    <ImageView
+                        android:id="@+id/imageView11"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/icons8_shopping_cart_bar_item" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clOrderAppBar"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/unselect_bar_item">
+
+                    <ImageView
+                        android:id="@+id/imageView12"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/icons_purchased_bar_item"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/appBarProfileBtn"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:background="@drawable/selected_bar_item"
+                android:drawableStart="@drawable/icons8_user_bar_item"
+                android:elevation="3dp"
+                android:fontFamily="@font/raleway"
+                android:paddingStart="24dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="18dp"
+                android:paddingBottom="3dp"
+                android:text="My Profile"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

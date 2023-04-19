@@ -50,6 +50,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         LinearLayoutManager layout = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         holder.rvOrderItemList.setLayoutManager(layout);
         holder.orderItemAdapter = new OrderItemAdapter(orderList.get(position).getOrderItems(), context);
+        holder.rvOrderItemList.setNestedScrollingEnabled(false);
         holder.rvOrderItemList.setAdapter(holder.orderItemAdapter);
 
         holder.itemView.setOnClickListener(v -> {
