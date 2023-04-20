@@ -84,7 +84,7 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
     }
 
     public void anhXa() {
-        userAvatar = findViewById(R.id.userAvatar);
+        userAvatar = findViewById(R.id.ivUserAvatar);
         ivNoProduct = findViewById(R.id.ivNoProduct);
 
         rvCategory = findViewById(R.id.rvCategory);

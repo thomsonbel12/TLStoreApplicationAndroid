@@ -75,7 +75,12 @@ public class SharedPrefManager {
         editor.apply();
         mCtx.startActivity(new Intent(mCtx, LoginActivity.class));
     }
-
+    public void deleteDeliveryList(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARE_PREF_ADDRESS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
     public static void set(String key, String value) {
         SharedPreferences preferences = mCtx.getSharedPreferences(SHARE_PREF_ADDRESS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

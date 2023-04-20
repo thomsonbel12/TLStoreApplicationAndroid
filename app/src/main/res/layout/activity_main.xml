@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userAvatar"
+            android:id="@+id/ivUserAvatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="4dp"
@@ -50,11 +50,11 @@
             android:inputType="textPersonName"
             android:paddingStart="8sp"
             android:paddingEnd="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/userAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/ivUserAvatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/userAvatar"
-            app:layout_constraintTop_toTopOf="@+id/userAvatar"
+            app:layout_constraintStart_toEndOf="@+id/ivUserAvatar"
+            app:layout_constraintTop_toTopOf="@+id/ivUserAvatar"
             app:layout_constraintVertical_bias="0.5" />
 
 

@@ -34,5 +34,33 @@ public class IntroActivity extends AppCompatActivity {
             startActivity(new Intent(IntroActivity.this, LoginActivity.class));
             finish();
         });
+
+//        loadActivity();
+    }
+    void loadActivity(){
+        new Thread(() -> {
+            int n = 0;
+            try{
+                do {
+                    if (n >= 5000){
+                        toLogin();
+                        return;
+                    }
+                    Thread.sleep((long) 100);
+                    n += 100;
+                }while(true);
+            }catch (InterruptedException interruptedException) {
+                toLogin();
+                return;
+            }catch (Throwable throwable){
+                toLogin();
+                return;
+            }
+        }).start();
+    }
+    void toLogin(){
+        IntroActivity.this.finish();
+        Intent intent = new Intent(IntroActivity.this.getApplicationContext(), (Class) LoginActivity.class);
+        IntroActivity.this.startActivity(intent);
     }
 }

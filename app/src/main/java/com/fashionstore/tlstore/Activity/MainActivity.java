@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
     }
 
     public void anhXa() {
-        userAvatar = findViewById(R.id.userAvatar);
+        userAvatar = findViewById(R.id.ivUserAvatar);
 
         rvCategory = findViewById(R.id.rvCategory);
         rvPopularProduct = findViewById(R.id.rvPopularProduct);
