@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.fashionstore.tlstore.API.OrderAPI;
 import com.fashionstore.tlstore.Adapter.OrderAdapter;
 import com.fashionstore.tlstore.Model.OrderModel;
@@ -35,7 +37,7 @@ public class OrdersActivity extends AppCompatActivity {
     AppCompatButton appBarOrderBtn;
     OrderAdapter orderAdapter;
     RecyclerView rvOrderList;
-
+    ImageView userAvatar;
     TextView tvTotalOrders;
     List<OrderModel> orderList = new ArrayList<>();
 
@@ -48,7 +50,12 @@ public class OrdersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_orders);
 
         anhXa();
-
+        UserModel user = SharedPrefManager.getInstance(this).getUser();
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            if (!(user.getAvatar() == null)) {
+                Glide.with(getApplicationContext()).load(user.getAvatar()).into(userAvatar);
+            }
+        }
         loadOrder();
 
 
@@ -104,6 +111,8 @@ public class OrdersActivity extends AppCompatActivity {
     }
 
     void anhXa(){
+        userAvatar = findViewById(R.id.ivUserAvatar);
+
         tvTotalOrders = findViewById(R.id.tvTotalOrders);
 
         clHome = findViewById(R.id.clMainAppBar);

@@ -87,7 +87,7 @@
             app:layout_constraintEnd_toEndOf="@+id/imageView6"
             app:layout_constraintStart_toStartOf="@+id/imageView6"
             app:layout_constraintTop_toTopOf="@+id/imageView6"
-            app:srcCompat="@drawable/logo_channel" />
+            app:srcCompat="@drawable/icons8_colored_cart" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

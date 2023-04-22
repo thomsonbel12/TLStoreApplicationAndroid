@@ -30,6 +30,25 @@ public class UserModel {
         this.avatar = avatar;
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRoles(Collection<String> roles) {
+        this.roles = roles;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 
     public long getId() {
         return id;
@@ -55,8 +74,16 @@ public class UserModel {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getAvatar() {
         return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getPhoneNumber() {

@@ -16,10 +16,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.fashionstore.tlstore.API.CartAPI;
 import com.fashionstore.tlstore.Adapter.CartAdapter;
 import com.fashionstore.tlstore.Interface.CartRecycleInterface;
 import com.fashionstore.tlstore.Model.CartModel;
+import com.fashionstore.tlstore.Model.UserModel;
 import com.fashionstore.tlstore.R;
 import com.fashionstore.tlstore.SharedPrefManager;
 
@@ -35,7 +37,7 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
     RecyclerView rvCart;
     TextView tvTotalCartPrice;
     TextView tvTotalCartItem;
-    ImageView ivCartEmpty;
+    ImageView ivCartEmpty, userAvatar;
     List<CartModel> cartList;
     CartAdapter cartAdapter;
     int totalCartPrice = 0;
@@ -49,7 +51,12 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
         setContentView(R.layout.activity_cart);
 
         anhXa();
-
+        UserModel user = SharedPrefManager.getInstance(this).getUser();
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            if (!(user.getAvatar() == null)) {
+                Glide.with(getApplicationContext()).load(user.getAvatar()).into(userAvatar);
+            }
+        }
         loadCart();
 
         goToCheckout();
@@ -72,6 +79,8 @@ public class CartActivity extends AppCompatActivity implements CartRecycleInterf
         clProfile = findViewById(R.id.clProfileAppBar);
 
         rvCart = findViewById(R.id.rvCart);
+
+        userAvatar = findViewById(R.id.ivUserAvatar);
         ivCartEmpty = findViewById(R.id.ivCartEmpty);
 
         tvTotalCartPrice = findViewById(R.id.tvTotalCartPrice);

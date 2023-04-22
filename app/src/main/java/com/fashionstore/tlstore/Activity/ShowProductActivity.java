@@ -49,8 +49,7 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
     CategoryAdapter categoryAdapter;
     ProductAdapter productAdapter;
     TextView tvUserAction, tvShowAllProduct;
-    ConstraintLayout clCart;
-
+    ConstraintLayout clCart, clOrder, clProfile;
     EditText searchProductEdit;
 
     AppCompatButton appBarHomeBtn;
@@ -65,6 +64,7 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//int flag, int mask
 
         setContentView(R.layout.activity_show_product);
+        anhXa();
 
         UserModel user = SharedPrefManager.getInstance(this).getUser();
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -72,14 +72,14 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
                 Glide.with(getApplicationContext()).load(user.getAvatar()).into(userAvatar);
             }
         }
-        anhXa();
         loadCategory();
         showAllProduct();
         showProduct();
 
         backToHome();
         goToCart();
-
+        toProfile();
+        toOrder();
         searchProduct();
     }
 
@@ -97,7 +97,8 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
 
         searchProductEdit = findViewById(R.id.searchProductEdit);
         clCart = findViewById(R.id.clCartAppBar);
-
+        clOrder = findViewById(R.id.clOrderAppBar);
+        clProfile = findViewById(R.id.clProfileAppBar);
 
         LinearLayoutManager layout = new GridLayoutManager(this, 2);
 //        LinearLayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -260,7 +261,18 @@ public class ShowProductActivity extends AppCompatActivity implements CategoryRe
     public void goToCart() {
         clCart.setOnClickListener(v -> startActivity(new Intent(ShowProductActivity.this, CartActivity.class)));
     }
-
+    void toOrder(){
+        clOrder.setOnClickListener(v -> {
+            finish();
+            startActivity(new Intent(ShowProductActivity.this, OrdersActivity.class));
+        });
+    }
+    void toProfile(){
+        clProfile.setOnClickListener(v -> {
+            finish();
+            startActivity(new Intent(ShowProductActivity.this, ProfileActivity.class));
+        });
+    }
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {

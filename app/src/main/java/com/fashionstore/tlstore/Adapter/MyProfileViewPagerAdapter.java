@@ -29,7 +29,8 @@ public class MyProfileViewPagerAdapter extends FragmentStateAdapter {
             return new MyProfileDetailFragment();
         }else if(position == 1){
             return new MyProfileWalletFragment();
-        }else{
+        }
+        else{
             return new MyProfileOtherFragment();
         }
     }

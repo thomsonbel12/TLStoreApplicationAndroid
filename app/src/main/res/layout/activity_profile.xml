@@ -64,14 +64,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout17">
 
+            <ImageView
+                android:id="@+id/ivChangeAvatar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivUserAvatar"
+                app:srcCompat="@drawable/icons8_create_100" />
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivUserAvatar"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_marginTop="18dp"
                 android:src="@drawable/user_avatar"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="1dp"
+                app:civ_border_color="#fff"
+                app:civ_border_width="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -112,7 +121,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/product_background"
             android:elevation="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -130,16 +139,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="@drawable/tab_color_selector"
                 app:tabIndicatorColor="@color/white"
-                app:tabSelectedTextColor="#fff"
-                app:tabTextColor="#FFFFFF"
                 app:tabIndicatorHeight="0dp"
-                app:tabTextAppearance="@style/tab_text"/>
+                app:tabSelectedTextColor="#fff"
+                app:tabTextAppearance="@style/tab_text"
+                app:tabTextColor="#FFFFFF" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp2MyProfileItem"
                 android:layout_width="match_parent"
-                android:layout_margin="12dp"
                 android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -3,21 +3,28 @@ package com.fashionstore.tlstore.Retrofit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-//    public final String BASE_URL = "http://172.16.30.254:8080";
+    //    public final String BASE_URL = "http://172.16.30.254:8080";
 //    public final String BASE_URL = "http://172.20.10.10:8080";
-//    public final String BASE_URL = "http://192.168.1.100:8080";
-//    public final String BASE_URL = "http://192.168.1.101:8080";
+    //    public final String BASE_URL = "http://192.168.1.102:8080";
+        public final String BASE_URL = "http://192.168.1.104:8080";
 //    public final String BASE_URL = "http://172.16.31.209:8080";
-    public final String BASE_URL = "http://172.20.10.2:8080";
+//    public final String BASE_URL = "http://172.20.10.3:8080";
 //    public final String BASE_URL = "http://172.20.10.10:8080";
 //    public final String BASE_URL = "http://192.168.1.101:8080";
 //    public final String BASE_URL = "http://172.16.31.82:8080";
 //    public final String BASE_URL = "http://192.168.1.105:8080";
-
+    OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+            .connectTimeout(40, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .build();
     Gson gson = new GsonBuilder()
 //            .setLenient()
             .setDateFormat("yyyy MM d HH:mm:ss").create();
@@ -26,6 +33,7 @@ public class RetrofitClient {
 
     public RetrofitClient() {
         retrofit = new Retrofit.Builder()
+                .client(okHttpClient)
                 .baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }

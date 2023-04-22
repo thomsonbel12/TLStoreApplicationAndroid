@@ -3,11 +3,17 @@ package com.fashionstore.tlstore.API;
 import com.fashionstore.tlstore.Model.UserModel;
 import com.fashionstore.tlstore.Retrofit.RetrofitClient;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface UserAPI {
@@ -29,4 +35,17 @@ public interface UserAPI {
 
     @GET("/user/check/{username}")
     Call<UserModel> checkExist(@Path("username") String username);
+
+    @Multipart
+    @POST("/files/cloud/upload")
+    Call<String> uploadUserAvatar(@Part("id")RequestBody userId, @Part MultipartBody.Part file);
+
+    @FormUrlEncoded
+    @POST("/user/change-password")
+    Call<String> changePassword(@Field("id") long id,
+                                @Field("password") String oldPass,
+                                @Field("newPass") String newPass);
+
+    @PATCH("/user/{id}")
+    Call<UserModel> updateUser(@Path("id") long id, @Body UserModel user);
 }

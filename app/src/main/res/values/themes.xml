@@ -23,4 +23,9 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="dialog_animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_up_animation</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_down_animation</item>
+    </style>
 </resources>

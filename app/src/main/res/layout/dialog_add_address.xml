@@ -131,7 +131,7 @@
                     android:layout_height="52dp"
                     android:background="@drawable/gray_circle"
                     android:elevation="3dp"
-                    android:text="Cancle"
+                    android:text="Cancel"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"

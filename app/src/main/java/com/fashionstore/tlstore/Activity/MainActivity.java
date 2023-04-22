@@ -58,13 +58,16 @@ public class MainActivity extends AppCompatActivity implements CategoryRecycleIn
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//int flag, int mask
         setContentView(R.layout.activity_main);
+
+        anhXa();
+
         UserModel user = SharedPrefManager.getInstance(this).getUser();
+//        Log.e("User Avatar", user.getAvatar());
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             if (!(user.getAvatar() == null)) {
                 Glide.with(getApplicationContext()).load(user.getAvatar()).into(userAvatar);
             }
         }
-        anhXa();
 
         loadCategory();
         loadPopularProduct();
