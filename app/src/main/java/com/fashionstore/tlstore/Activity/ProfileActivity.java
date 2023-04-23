@@ -29,6 +29,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.fashionstore.tlstore.API.FileAPI;
 import com.fashionstore.tlstore.API.UserAPI;
 import com.fashionstore.tlstore.Adapter.MyProfileViewPagerAdapter;
 import com.fashionstore.tlstore.Model.UserModel;
@@ -242,21 +243,37 @@ public class ProfileActivity extends AppCompatActivity {
         mProgressDialog.show();
         user = SharedPrefManager.getInstance(this).getUser();
 //        String idString = String.valueOf(user.getId());
-        RequestBody id = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(user.getId()));
 
         String IMAGE_PATH = RealPathUtil.getRealPath(this, mUri);
         Log.e("=========IMG PATH", IMAGE_PATH);
         File file = new File(IMAGE_PATH);
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part partBodyImages = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-        UserAPI.USER_API.uploadUserAvatar(id, partBodyImages).enqueue(new Callback<String>() {
+        FileAPI.FILE_API.uploadFile(partBodyImages).enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
 //                user = response.body();
-                user.setAvatar(response.body());
-                SharedPrefManager.getInstance(ProfileActivity.this).userLogin(user);
-                Toast.makeText(ProfileActivity.this, "Update Avatar Successful", Toast.LENGTH_SHORT).show();
-                mProgressDialog.dismiss();
+                if(response.isSuccessful()){
+                    String file = response.body();
+                    if(file != null){
+                        user.setAvatar(response.body());
+                        UserAPI.USER_API.updateUser(user.getId(), user).enqueue(new Callback<UserModel>() {
+                            @Override
+                            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                                if(response.isSuccessful()){
+                                    SharedPrefManager.getInstance(ProfileActivity.this).userLogin(user);
+                                    Toast.makeText(ProfileActivity.this, "Update Avatar Successful", Toast.LENGTH_SHORT).show();
+                                    mProgressDialog.dismiss();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<UserModel> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                }
             }
 
             @Override
