@@ -20,25 +20,22 @@ public interface UserAPI {
 
     RetrofitClient RETROFIT_CLIENT = new RetrofitClient();
     UserAPI USER_API = RETROFIT_CLIENT.getRetrofit().create(UserAPI.class);
+
     @FormUrlEncoded
     @POST("/user/login")
-    Call<UserModel> login(@Field("userName")String username,
-                          @Field("password")String password);
+    Call<UserModel> login(@Field("userName") String username,
+                          @Field("password") String password);
 
     @FormUrlEncoded
     @POST("/user")
-    Call<UserModel> signup(@Field("userName")String username,
-                          @Field("name")String name,
-                          @Field("email")String email,
-                          @Field("phoneNumber")String phoneNumber,
-                          @Field("password")String password);
+    Call<UserModel> signup(@Field("userName") String username,
+                           @Field("name") String name,
+                           @Field("email") String email,
+                           @Field("phoneNumber") String phoneNumber,
+                           @Field("password") String password);
 
     @GET("/user/check/{username}")
     Call<UserModel> checkExist(@Path("username") String username);
-
-    @Multipart
-    @POST("/files/cloud/upload")
-    Call<String> uploadUserAvatar(@Part("id")RequestBody userId, @Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST("/user/change-password")
@@ -46,6 +43,16 @@ public interface UserAPI {
                                 @Field("password") String oldPass,
                                 @Field("newPass") String newPass);
 
+    @FormUrlEncoded
+    @POST("/user/reset-password")
+    Call<String> resetPassword(@Field("id") long id,
+                               @Field("newPass") String newPass);
+
     @PATCH("/user/{id}")
     Call<UserModel> updateUser(@Path("id") long id, @Body UserModel user);
+
+    @FormUrlEncoded
+    @POST("/user/forget-password")
+    Call<String> getMailCodeFromUsername(@Field("username") String username);
+
 }

@@ -58,7 +58,7 @@ dependencies {
 
 
     implementation 'me.relex:circleindicator:2.1.6'
-
+    implementation 'com.github.gongw:verifycodeview:1.0.2'
 }
 
 //dependencies{

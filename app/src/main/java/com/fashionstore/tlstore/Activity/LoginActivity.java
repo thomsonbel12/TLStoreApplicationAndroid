@@ -24,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    TextView toSignUpPageBtn;
+    TextView toSignUpPageBtn, tvForgetPass;
     EditText username;
     EditText password;
     Button loginBtn;
@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.usernameEdit);
         password = findViewById(R.id.passwordEdit);
         loginBtn = findViewById(R.id.loginBtn);
+        tvForgetPass = findViewById(R.id.tvForgetPass);
         toSignUpPageBtn = findViewById(R.id.toSignupPageBtn);
 
         toSignUpPageBtn.setOnClickListener(v -> {
@@ -57,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
 //                finish();
         });
         loginBtn.setOnClickListener(v -> login());
+        tvForgetPass.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class)));
+
 
     }
 
