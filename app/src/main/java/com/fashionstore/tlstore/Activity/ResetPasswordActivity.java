@@ -29,7 +29,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     ConstraintLayout clCheckUsername, clCheckCode, clResetPass;
     EditText etUsername, etNewPass, etConfirmPass;
-    TextView tvUsernameErr, tvCodeErr;
+    TextView tvUsernameErr, tvCodeErr, tvGoBack;
     VerifyCodeView etCode;
     ProgressDialog mProgressDialog;
     String code = "";
@@ -52,7 +52,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
         appCompatCheckUsername.setOnClickListener(v -> checkUser());
         appCompatCheckCode.setOnClickListener(v -> checkCode());
         appCompatChangePasswordBtn.setOnClickListener(v -> resetPassword());
-
+        tvGoBack.setOnClickListener(v -> {
+            onBackPressed();
+            finish();
+        });
     }
 
     void anhXa() {
@@ -62,6 +65,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         tvUsernameErr = findViewById(R.id.tvError);
         tvCodeErr = findViewById(R.id.tvCodeError);
+        tvGoBack = findViewById(R.id.tvGoBack);
 
         etUsername = findViewById(R.id.etUsername);
         etCode = findViewById(R.id.etCode);
